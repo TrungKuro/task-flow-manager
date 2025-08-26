@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
-:root {
+/* ------------------------------------------------------------------------- */
+
+/* :root {
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -23,4 +25,93 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+} */
+
+/* ------------------------------------------------------------------------- */
+
+/* 
+  Reset box-sizing để tính toán width/height chính xác hơn.
+  Với "border-box": padding + border sẽ nằm trong tổng width/height,
+  tránh lỗi layout khi thêm padding/border.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 
+  Thiết lập chiều rộng & cao full màn hình cho toàn bộ app:
+  - html, body: kéo dãn full viewport
+  - #root (React) / .app (Next.js wrapper): giữ kích thước full để chứa toàn bộ UI
+  Đồng thời apply một số style mặc định:
+  - text-sm: cỡ chữ nhỏ mặc định cho toàn site
+  - bg-white: nền trắng ở light mode
+  - dark:bg-black: nền đen khi bật dark mode
+  Toàn bộ body mặc định là Arial...
+  - nhưng nếu bên trong có phần tử dùng className="font-sans", nó lại chuyển sang Geist Sans (vì Tailwind override)
+  - hoặc className="font-mono", nó lại chuyển sang Geist Mono
+*/
+html,
+body,
+#root,
+.app {
+  height: 100%;
+  width: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-white text-sm dark:bg-black;
+}
+
+/* ------------------------------------------------------------------------- */
+
+/*
+  Giúp tạo biến cục bộ cho một [selector] cụ thể
+  Khi bạn dùng "font-sans" hoặc "font-mono" trong className → Tailwind sẽ map sang các biến này
+ */
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/*
+  Giúp định nghĩa màu/chủ đề [toàn cục]
+ */
+@theme {
+  --color-white: #ffffff;
+
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-500: #6b7280;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+
+  --color-blue-200: #93c5fd;
+  --color-blue-400: #60a5fa;
+  --color-blue-500: #3b82f6;
+
+  --color-dark-bg: #101214;
+  --color-dark-secondary: #1d1f21;
+  --color-dark-tertiary: #3b3d40;
+  --color-blue-primary: #0275ff;
+  --color-stroke-dark: #2d3135;
+
+  --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
+  --background-image-gradient-conic: conic-gradient(
+    from 180deg at 50% 50%,
+    var(--tw-gradient-stops)
+  );
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* 
+  Tuỳ chỉnh thanh cuộn (scrollbar) cho trình duyệt dùng WebKit (Chrome, Safari, Edge Chromium).
+  Ở đây set width và height = 0px:
+  → Ẩn hoàn toàn scrollbar cả theo chiều ngang (height) và dọc (width).
+  → Nội dung vẫn có thể scroll bằng chuột, trackpad, hoặc phím, nhưng thanh cuộn sẽ không hiển thị.
+*/
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
 }

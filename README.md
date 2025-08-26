@@ -141,6 +141,8 @@
   - 🔗 [ES7+ React/Redux/React-Native snippets](https://marketplace.visualstudio.com/items?itemName=dsznajder.es7-react-js-snippets)
   - 🔗 [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
   - 🔗 [Prettier ESLint](https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint)
+  - 🔗 [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
+  - 🔗 [Tailwind Documentation](https://marketplace.visualstudio.com/items?itemName=alfredbirk.tailwind-documentation)
 - Cho **Browser (Google Chrome | Brave)**:
   - 🔗 [Pesticide](https://chromewebstore.google.com/detail/pesticide/bakpbgckdnepkmkeaiomhmfcnejndkbi)
   - 🔗 [Redux DevTools](https://chromewebstore.google.com/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd)
@@ -148,7 +150,6 @@
 ### Package
 
 - Dùng cho `[dependencies]`:
-
   - ➡️ [MUI - Material UI](https://mui.com/)
     - 🔗 [@mui/material](https://www.npmjs.com/package/@mui/material)
       - 🧐 Đây là thư viện cung cấp các **Component React** nguồn mở triển khai theo _"Material Design"_ của **Google**
@@ -180,10 +181,24 @@
     - ‼️ Hiện tại `26-08-05`, gói _"gantt-task-react @0.3.9"_ chưa hỗ trợ _"React @19.1.0"_ (bản mới nhất ~ cũng là bản hiện tại đang dùng), chỉ hỗ trợ tới _"React @^18.0.0"_. Riêng gói này dùng lệnh `npm install gantt-task-react --legacy-peer-deps` để cài đặt
 
 - Dùng cho `[devDependencies]`:
-
   - 🔗 [@types/node](https://www.npmjs.com/package/@types/node)
     - 🧐 Chứa các định nghĩa kiểu cho `Node`
   - 🔗 [@types/uuid](https://www.npmjs.com/package/@types/uuid)
     - 🧐 Chứa các định nghĩa kiểu cho `UUID`
   - 🔗 [@types/numeral](https://www.npmjs.com/package/@types/numeral)
     - 🧐 Chứa các định nghĩa kiểu cho `Numeral`
+  - 🔗 [prettier](https://www.npmjs.com/package/prettier)
+    - 🧐 Là `Code Formatter` – <u>công cụ tự động định dạng lại code</u> _(JS, TS, CSS, HTML, JSON, …)_ theo quy tắc thống nhất, giúp code sạch, dễ đọc, và đồng bộ trong cả team
+  - 🔗 [prettier-plugin-tailwindcss](https://www.npmjs.com/package/prettier-plugin-tailwindcss/v/0.0.0-insiders.d539a72)
+    - 🧐 Là `plugin` cho **Prettier** có chức năng: <u>tự động sắp xếp lại các `Class Tailwind` theo thứ tự chuẩn</u> (do team Tailwind quy định) 💎
+    - ✅ Giúp code:
+      - Gọn gàng, dễ đọc (`class` không bị lộn xộn)
+      - Thống nhất trong team, tránh conflict khi merge code
+      - Dễ bảo trì, vì các `class` luôn có thứ tự cố định
+  - 🔗 [tailwind-merge](https://www.npmjs.com/package/tailwind-merge)
+    - 🧐 Hàm tiện ích `(Utility Function)` để <u>hợp nhất các `Class Tailwind` trong **JS**</u> một cách hiệu quả mà không có xung đột về kiểu dáng
+  - 🔗 [clsx](https://www.npmjs.com/package/clsx)
+    - 🧐 Là một `utility` nhỏ cho **JavaScript/React** dùng để: <u>kết hợp nhiều `className` thành một string cuối cùng</u>, với hỗ trợ điều kiện `(true/false)` và mảng
+    - ✅ Lợi ích:
+      - Viết `className` gọn gàng, có điều kiện
+      - Tránh chuỗi `class` dài dòng hoặc nhiều if/else
