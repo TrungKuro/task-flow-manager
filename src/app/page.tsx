@@ -1,9 +1,7 @@
 export default function Home() {
   return (
-    <div className="grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-sans sm:p-20">
-      <main className="row-start-2 flex flex-col items-center gap-[32px] sm:items-start">
-        <p className="bg-red-500">Hello World!</p>
-      </main>
+    <div className="flex h-full w-full items-center justify-center bg-red-200">
+      <p className="bg-amber-400">Hello World!</p>
     </div>
   );
 }

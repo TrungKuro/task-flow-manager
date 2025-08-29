@@ -202,3 +202,9 @@
     - ✅ Lợi ích:
       - Viết `className` gọn gàng, có điều kiện
       - Tránh chuỗi `class` dài dòng hoặc nhiều if/else
+
+### Web Tools
+
+- [download-directory • github • io](https://download-directory.github.io/)
+  - ❌ GitHub không hỗ trợ tải trực tiếp một thư mục trong một Repo.
+  - ✅ Nếu chỉ cần down 1 thư mục thay vì nguyên Repo: dùng web tool ngoài này với _"link thư mục"_.
