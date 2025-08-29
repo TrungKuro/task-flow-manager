@@ -2,33 +2,6 @@
 
 /* ------------------------------------------------------------------------- */
 
-/* :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-} */
-
-/* ------------------------------------------------------------------------- */
-
 /* 
   Reset box-sizing để tính toán width/height chính xác hơn.
   Với "border-box": padding + border sẽ nằm trong tổng width/height,
@@ -48,9 +21,6 @@ body {
   - text-sm: cỡ chữ nhỏ mặc định cho toàn site
   - bg-white: nền trắng ở light mode
   - dark:bg-black: nền đen khi bật dark mode
-  Toàn bộ body mặc định là Arial...
-  - nhưng nếu bên trong có phần tử dùng className="font-sans", nó lại chuyển sang Geist Sans (vì Tailwind override)
-  - hoặc className="font-mono", nó lại chuyển sang Geist Mono
 */
 html,
 body,
@@ -58,20 +28,10 @@ body,
 .app {
   height: 100%;
   width: 100%;
-  font-family: Arial, Helvetica, sans-serif;
   @apply bg-white text-sm dark:bg-black;
 }
 
 /* ------------------------------------------------------------------------- */
-
-/*
-  Giúp tạo biến cục bộ cho một [selector] cụ thể
-  Khi bạn dùng "font-sans" hoặc "font-mono" trong className → Tailwind sẽ map sang các biến này
- */
-@theme inline {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
 /*
   Kích hoạt "dark mode" theo [class]
