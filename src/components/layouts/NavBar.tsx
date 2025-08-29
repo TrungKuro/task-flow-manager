@@ -19,9 +19,10 @@ const NavBar = () => {
     <div className="flex items-center justify-between bg-white px-4 py-3 dark:bg-black">
       {/* Search Bar */}
       <div className="flex items-center gap-8">
-        {/* Btn SideBar */}
+        {/* Btn Open SideBar */}
         {!isSidebarCollapsed ? null : (
           <button
+            className="cursor-pointer"
             onClick={() => dispatch(setIsSidebarCollapsed(!isSidebarCollapsed))}
           >
             <Menu className="h-8 w-8 dark:text-white" />
