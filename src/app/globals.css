@@ -74,9 +74,15 @@ body,
 }
 
 /*
+  Kích hoạt "dark mode" theo [class]
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
   Giúp định nghĩa màu/chủ đề [toàn cục]
  */
 @theme {
+  /* Custom colors */
   --color-white: #ffffff;
 
   --color-gray-100: #f3f4f6;
@@ -96,6 +102,7 @@ body,
   --color-blue-primary: #0275ff;
   --color-stroke-dark: #2d3135;
 
+  /* Backgrounds */
   --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
   --background-image-gradient-conic: conic-gradient(
     from 180deg at 50% 50%,

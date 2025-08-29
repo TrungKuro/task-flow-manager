@@ -40,7 +40,7 @@
     - Dừng và báo lỗi nếu có conflict
     - Tạo `Dependency Tree` <u>chính xác theo yêu cầu</u>
     - Fail fast - không cài nếu không tương thích
-    ```
+    ```bash
     npm install some-package
     ```
   - ⚠️ Khi cài đặt package dùng _"flag"_ `--legacy-peer-deps`:
@@ -48,14 +48,14 @@
     - Bỏ qua một số conflict `Peer Dependency`
     - Vẫn cài đặt được package dù có warning
     - Tạo `Dependency Tree` <u>gần giống với mong muốn</u>
-    ```
+    ```bash
     npm install some-package --legacy-peer-deps
     ```
   - ❌ Khi cài đặt package dùng _"flag"_ `--force`:
     - Bỏ qua TẤT CẢ validation
     - Tính năng kiểm tra `Peer Dependencies` hoàn toàn bị bỏ qua
     - Cài đúng version yêu cầu
-    ```
+    ```bash
     npm install some-package --force
     ```
   - 💎 Khuyến nghị sử dụng:
@@ -71,11 +71,43 @@
     - Giải pháp:
       - 1️⃣✅ Tiếp tục dùng kèm _"flag"_ `--legacy-peer-deps` để cài đặt các gói tiếp theo (cũng tương tự với `--force`).
       - 2️⃣❌ Xóa lock file và reinstall:
-      ```
+      ```bash
       rm package-lock.json
       rm -rf node_modules
       npm install
       ```
+
+---
+
+- ⭐️ Vài lệnh để <u>kiểm tra cấu trúc</u> `dependencies` có ổn hay không?
+  - 🔹 1. **Kiểm tra cây dependencies**
+    - <u>Hiển thị toàn bộ cây dependencies</u>.
+    - Nếu có `invalid`, `deduped`, `extraneous` → tức là có vấn đề về **(version)** hoặc **(dependency)** thừa.
+      - `invalid` (**version** sai so với **peer deps**)
+      - `deduped` (**NPM hoist** chung bản để tránh trùng)
+      - `extraneous` (có **package** cài mà không khai báo trong `package.json`)
+    - Nếu mọi gói khớp **(version)** → không có dòng `“invalid”` ❌ thì **OK** ✅.
+    ```bash
+    npm ls
+    ```
+  - 🔹 2. **Kiểm tra lỗi/issue trong cây dependency**
+    - Lệnh `npm audit` quét bảo mật & lỗi dependency.
+    - Nếu muốn fix tự động: `npm audit fix`
+  - 🔹 3. **Kiểm tra version không khớp (peer deps conflict)**
+    - Xem chính xác bao nhiêu **(version)** `<package-name>` đang tồn tại và gói nào yêu cầu.
+    ```bash
+    npm ls <package-name>
+    ```
+
+- ⭐️ Cập nhật lên bản mới nhất trên `NPM Registry` (bỏ qua ‼️ **Range Version**)
+  - Bước 1: `npx npm-check-updates -u` quét toàn bộ `package.json` và thay **(version)** bằng **(latest)**.
+  - Bước 2: `npm install` để cài bản mới nhất vừa ghi vào file.
+  - Đây là cách nhanh nhất để <u>toàn bộ gói đều lên bản mới nhất tuyệt đối</u>.
+
+  ```bash
+  npx npm-check-updates -u
+  npm install
+  ```
 
 ### Framework
 
@@ -179,6 +211,16 @@
     - 🧐 Cung cấp component <u>biểu đồ `Gantt` có thể tương tác</u> cho **React** với **TypeScript**
     - 🏆 [Top 5 React Gantt Chart Libraries in 2025](https://svar.dev/blog/top-react-gantt-charts/#devextreme-react-gantt)
     - ‼️ Hiện tại `26-08-05`, gói _"gantt-task-react @0.3.9"_ chưa hỗ trợ _"React @19.1.0"_ (bản mới nhất ~ cũng là bản hiện tại đang dùng), chỉ hỗ trợ tới _"React @^18.0.0"_. Riêng gói này dùng lệnh `npm install gantt-task-react --legacy-peer-deps` để cài đặt
+  - 🔗 [dotenv](https://www.npmjs.com/package/dotenv)
+    - 🧐 Giúp quản lý _"biến môi trường"_ trong **Node.js**
+      - Nó đọc file `(.env)` và nạp các biến vào `process.env`
+      - Dùng để <u>tách config nhạy cảm</u> (`API key`, `DB password`, secret…) ra khỏi code. Tránh hardcode trực tiếp trong source
+  - 🔗 [react-redux](https://www.npmjs.com/package/react-redux)
+    - 🧐 Thư viện giúp kết nối `Redux` (thư viện <u>quản lý `state`</u> cho **JavaScript apps**) với **React**
+  - 🔗 [@reduxjs/toolkit](https://www.npmjs.com/package/@reduxjs/toolkit)
+    - 🧐 Viết tắt `(RTK)`, là bộ công cụ chính thức <u>để dùng `Redux` dễ hơn</u>. Nó giải quyết <u>nhược điểm của `Redux` gốc</u> (dài dòng, nhiều **boilerplate**)
+  - 🔗 [redux-persist](https://www.npmjs.com/package/redux-persist)
+    - 🧐 Thư viện giúp <u>lưu `(persist) state` của `Redux store`</u> vào **Storage** (thường là `localStorage` hoặc `AsyncStorage` trong **React Native**)
 
 - Dùng cho `[devDependencies]`:
   - 🔗 [@types/node](https://www.npmjs.com/package/@types/node)

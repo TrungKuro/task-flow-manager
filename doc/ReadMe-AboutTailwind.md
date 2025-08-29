@@ -1,6 +1,7 @@
 # Tailwind CSS
 
 - ‼️ Hiện tại `Tailwind CSS` **(v4)** (phát hành **2025**) đã thay đổi <u>cách cấu hình</u> và <u>cách viết `utility`</u> khá nhiều so với **(v3)**.
+- 🔗 [Dark mode](https://tailwindcss.com/docs/dark-mode)
 
 ## Tailwind (v3) ➡️ (v4)
 
@@ -151,27 +152,27 @@
 
 // ▶︎ Bo góc trên-trái, thêm border (trừ cạnh phải), màu viền sáng ở light mode, màu tối ở dark mode
 .timeline ._3_ygE {
-  @apply dark:border-stroke-dark rounded-tl-md border border-r-0 border-[#e6e4e4];
+  @apply rounded-tl-md border border-r-0 border-[#e6e4e4] dark:border-stroke-dark;
 }
 
 // ▶︎ Đặt màu viền (light/dark)
 .timeline ._2eZzQ {
-  @apply dark:border-stroke-dark border-[#e6e4e4];
+  @apply border-[#e6e4e4] dark:border-stroke-dark;
 }
 
 // ▶︎ Hình khối (circle/box) trong timeline:
 // Mặc định: nền trắng (light) hoặc dark-secondary (dark)
 // Item chẵn (nth-child(even)): nền xám nhạt (light) hoặc dark-tertiary (dark)
 .timeline ._2dZTy {
-  @apply dark:fill-dark-secondary fill-white;
+  @apply fill-white dark:fill-dark-secondary;
 }
 .timeline ._2dZTy:nth-child(even) {
-  @apply dark:fill-dark-tertiary fill-[#f5f5f5];
+  @apply fill-[#f5f5f5] dark:fill-dark-tertiary;
 }
 
 // ▶︎ Một dạng hình SVG (circle/marker) có fill + stroke
 .timeline ._35nLX {
-  @apply dark:fill-dark-secondary dark:stroke-stroke-dark fill-white stroke-[#e6e4e4];
+  @apply fill-white stroke-[#e6e4e4] dark:fill-dark-secondary dark:stroke-stroke-dark;
 }
 
 // ▶︎ Chữ/icon trong timeline: màu đen đậm (light) hoặc trắng (dark)
@@ -183,27 +184,27 @@
 // Light: nền trắng (hoặc xám nhạt nếu là item chẵn)
 // Dark: nền dark-secondary (hoặc dark-tertiary cho item chẵn)
 .timeline ._34SS0 {
-  @apply dark:bg-dark-secondary bg-white;
+  @apply bg-white dark:bg-dark-secondary;
 }
 .timeline ._34SS0:nth-of-type(even) {
-  @apply dark:bg-dark-tertiary bg-[#f5f5f5];
+  @apply bg-[#f5f5f5] dark:bg-dark-tertiary;
 }
 
 // ▶︎ Các đường nối (line) trong timeline: màu viền light/dark
 .timeline ._RuwuK,
 .timeline ._3rUKi,
 .timeline ._1rLuZ {
-  @apply dark:stroke-stroke-dark stroke-[#e6e4e4];
+  @apply stroke-[#e6e4e4] dark:stroke-stroke-dark;
 }
 
 // ▶︎ Loại bỏ viền trái, thêm border light/dark cho khối trong timeline
 .timeline ._3ZbQT {
-  @apply dark:border-stroke-dark border-l-0 border-[#e6e4e4];
+  @apply border-l-0 border-[#e6e4e4] dark:border-stroke-dark;
 }
 
 // ▶︎ Một container lớn hoặc cuối timeline: nền trắng (light), nền dark-bg (dark)
 .timeline ._3T42e {
-  @apply dark:bg-dark-bg bg-white;
+  @apply bg-white dark:bg-dark-bg;
 }
 
 // ▶︎ Chữ phụ/trạng thái trong dark mode sẽ có màu xám nhẹ để giảm độ tương phản
