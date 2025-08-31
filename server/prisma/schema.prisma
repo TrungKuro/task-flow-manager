@@ -1,0 +1,136 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../generated/prisma" // Generate Prisma client vào thư mục generated
+}
+
+datasource db {
+  provider = "postgresql" // Sử dụng PostgreSQL database
+  url      = env("DATABASE_URL") // Lấy connection string từ biến môi trường
+}
+
+/* ------------------------------------------------------------------------- */
+
+//! File schema này định nghĩa cấu trúc database cho ứng dụng Task Flow Manager
+//! Sử dụng PostgreSQL làm database chính và Prisma ORM để quản lý data
+//! Bao gồm các model: User, Team, Project, Task, và các bảng quan hệ
+
+/* ------------------------------------------------------------------------- */
+
+// Model User - Quản lý thông tin người dùng trong hệ thống
+model User {
+  userId            Int     @id @default(autoincrement()) // ID tự tăng làm primary key
+  cognitoId         String  @unique // ID từ AWS Cognito (authentication service)
+  username          String  @unique // Tên đăng nhập duy nhất
+  profilePictureUrl String? // URL ảnh đại diện (có thể null)
+  teamId            Int? // ID team mà user thuộc về (có thể null)
+
+  // Quan hệ với các model khác
+  authoredTasks   Task[]           @relation("TaskAuthor") // Các task mà user tạo ra
+  assignedTasks   Task[]           @relation("TaskAssignee") // Các task được giao cho user
+  taskAssignments TaskAssignment[] // Bảng trung gian task-user assignments
+  attachments     Attachment[] // Các file đính kèm do user upload
+  comments        Comment[] // Các comment do user viết
+  team            Team?            @relation(fields: [teamId], references: [id]) // Team mà user thuộc về
+}
+
+// Model Team - Quản lý thông tin nhóm làm việc
+model Team {
+  id                   Int           @id @default(autoincrement()) // ID tự tăng
+  teamName             String // Tên nhóm
+  productOwnerUserId   Int? // ID của Product Owner (có thể null)
+  projectManagerUserId Int? // ID của Project Manager (có thể null)
+  
+  // Quan hệ với các model khác
+  projectTeams         ProjectTeam[] // Các project mà team tham gia
+  user                 User[] // Các thành viên trong team
+}
+
+// Model Project - Quản lý thông tin dự án
+model Project {
+  id           Int           @id @default(autoincrement()) // ID tự tăng
+  name         String // Tên dự án
+  description  String? // Mô tả dự án (có thể null)
+  startDate    DateTime? // Ngày bắt đầu (có thể null)
+  endDate      DateTime? // Ngày kết thúc (có thể null)
+  
+  // Quan hệ với các model khác
+  tasks        Task[] // Các task thuộc về project này
+  projectTeams ProjectTeam[] // Các team tham gia project này
+}
+
+// Model ProjectTeam - Bảng trung gian quan hệ nhiều-nhiều giữa Project và Team
+model ProjectTeam {
+  id        Int     @id @default(autoincrement()) // ID tự tăng
+  teamId    Int // Foreign key tới Team
+  projectId Int // Foreign key tới Project
+  
+  // Định nghĩa foreign key relationships
+  team      Team    @relation(fields: [teamId], references: [id])
+  project   Project @relation(fields: [projectId], references: [id])
+}
+
+// Model Task - Quản lý thông tin công việc/nhiệm vụ
+model Task {
+  id             Int       @id @default(autoincrement()) // ID tự tăng
+  title          String // Tiêu đề task
+  description    String? // Mô tả chi tiết (có thể null)
+  status         String? // Trạng thái: TODO, IN_PROGRESS, COMPLETED, etc.
+  priority       String? // Độ ưu tiên: LOW, MEDIUM, HIGH, URGENT
+  tags           String? // Tags/nhãn phân loại (có thể null)
+  startDate      DateTime? // Ngày bắt đầu (có thể null)
+  dueDate        DateTime? // Hạn hoàn thành (có thể null)
+  points         Int? // Điểm số/story points (có thể null)
+  projectId      Int // ID project mà task thuộc về
+  authorUserId   Int // ID người tạo task
+  assignedUserId Int? // ID người được giao task (có thể null)
+
+  // Quan hệ với các model khác
+  project         Project          @relation(fields: [projectId], references: [id]) // Project chứa task
+  author          User             @relation("TaskAuthor", fields: [authorUserId], references: [userId]) // Người tạo
+  assignee        User?            @relation("TaskAssignee", fields: [assignedUserId], references: [userId]) // Người được giao
+  taskAssignments TaskAssignment[] // Các assignment khác (nếu có nhiều người)
+  attachments     Attachment[] // Các file đính kèm
+  comments        Comment[] // Các comment/thảo luận
+}
+
+// Model TaskAssignment - Bảng trung gian quản lý việc giao task cho nhiều user
+model TaskAssignment {
+  id     Int @id @default(autoincrement()) // ID tự tăng
+  userId Int // ID user được giao task
+  taskId Int // ID task được giao
+
+  // Định nghĩa foreign key relationships
+  user User @relation(fields: [userId], references: [userId])
+  task Task @relation(fields: [taskId], references: [id])
+}
+
+// Model Attachment - Quản lý file đính kèm trong task
+model Attachment {
+  id           Int     @id @default(autoincrement()) // ID tự tăng
+  fileURL      String // URL/đường dẫn tới file
+  fileName     String? // Tên file gốc (có thể null)
+  taskId       Int // ID task chứa file này
+  uploadedById Int // ID user upload file
+
+  // Quan hệ với các model khác
+  task       Task @relation(fields: [taskId], references: [id]) // Task chứa file
+  uploadedBy User @relation(fields: [uploadedById], references: [userId]) // Người upload
+}
+
+// Model Comment - Quản lý comment/thảo luận trong task
+model Comment {
+  id     Int    @id @default(autoincrement()) // ID tự tăng
+  text   String // Nội dung comment
+  taskId Int // ID task được comment
+  userId Int // ID user viết comment
+
+  // Quan hệ với các model khác
+  task Task @relation(fields: [taskId], references: [id]) // Task được comment
+  user User @relation(fields: [userId], references: [userId]) // Người viết comment
+}
