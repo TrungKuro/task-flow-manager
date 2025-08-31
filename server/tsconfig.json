@@ -1,0 +1,56 @@
+{
+  // Visit https://aka.ms/tsconfig to read more about this file
+  "compilerOptions": {
+    // ⚙️ File Layout
+    // "rootDir": "./src",
+    "outDir": "./dist", //! Emit ✅
+
+    // ⚙️ Environment Settings
+    "module": "nodenext", //! Modules ✅
+    "moduleResolution": "nodenext", //! Modules ✅
+    "resolveJsonModule": true, //! Modules ✅
+    // "types": [], //! Modules
+    // ‼️ For nodejs:
+    // "lib": ["esnext"],
+    // "types": ["node"],
+    // and 👉🏻 npm install -D @types/node
+    "target": "esnext", //! Language and Environment ✅
+
+    // ⚙️ Interop Constraints
+    "esModuleInterop": true, // ✅
+    "forceConsistentCasingInFileNames": true, // ✅
+
+    /* --------------------------------------------------------------------- */
+
+    // ⚙️ Other Outputs
+    // "sourceMap": true, //! Emit
+    // "declaration": true, //! Emit
+    // "declarationMap": true, //! Emit
+
+    // ⚙️ Stricter Typechecking Options
+    // "noUncheckedIndexedAccess": true, //! Type Checking
+    // "exactOptionalPropertyTypes": true, //! Type Checking
+
+    // ⚙️ Style Options
+    // "noImplicitReturns": true,
+    // "noImplicitOverride": true,
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
+    // "noFallthroughCasesInSwitch": true,
+    // "noPropertyAccessFromIndexSignature": true,
+
+    // ⚙️ Recommended Options
+    "strict": true, //! Type Checking ✅
+    // "jsx": "react-jsx", //! Language and Environment
+    // "verbatimModuleSyntax": true, //! Interop Constraints
+    // "isolatedModules": true, //! Interop Constraints
+    // "noUncheckedSideEffectImports": true, //! Modules
+    // "moduleDetection": "force", //! Language and Environment
+    "skipLibCheck": true //! Completeness ✅
+  },
+  "include": [
+    "src/**/*", // toàn bộ code trong (src/)
+    "src/data/**/*.json", // bao gồm cả (.json) trong (src/data/)
+    "prisma/**/*" // toàn bộ code trong (prisma/)
+  ] // ✅
+}

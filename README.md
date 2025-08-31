@@ -109,6 +109,52 @@
   npm install
   ```
 
+---
+
+- ‼️ Cấu trúc **Repo** hiện đang dùng:
+
+  ```
+  task-flow-manager/   <-- repo Git chính
+  ├── node_modules/    <-- dùng cho FE (Next.js)
+  ├── package.json     <-- của FE
+  ├── tsconfig.json
+  ├── server/          <-- có package.json + tsconfig.json riêng cho BE
+  └── src/             <-- FE code
+  ```
+
+  - File `package.json` ở _"root"_ vs trong _"server/"_
+    - Hoàn toàn độc lập nhau 💎
+    - `task-flow-manager/package.json` quản lý _"dependency"_ cho **FE (Next.js)**.
+      - Khi bạn `npm install` ở _"root"_ → chỉ cài cho **FE**.
+    - `task-flow-manager/server/package.json` quản lý _"dependency"_ cho **BE (Node.js/Express/NestJS)**.
+      - Khi bạn `npm install` ở _"server/"_ → chỉ cài cho **BE**.
+
+- 👉 Đây gọi là `Monorepo nhẹ` (**1 repo Git** <u>chứa nhiều project con</u>).
+  - ✅ Ưu điểm:
+    - Đơn giản, **FE/BE** cùng **Repo** → dễ đồng bộ.
+    - Không bị vấn đề _"nested git"_.
+    - Phù hợp dự án nhỏ hoặc trung bình.
+  - ❌ Nhược điểm:
+    - Mỗi bên **(client và server)** có `node_modules` riêng → dung lượng **Repo** nặng hơn, cài `dependency` mất nhiều thời gian.
+    - Nếu sau này bạn muốn dùng `dependency` chung (ví dụ thư viện eslint, prettier, tsconfig), phải cài 2 nơi.
+    - `CI/CD` cần setup tách riêng **FE/BE build** ➡️ `Deploy` riêng cho **FE và BE**.
+
+- 🔹 Có thể: Nâng cấp thành `npm workspaces / pnpm workspaces`
+  - Tạo 1 `package.json` ở _"root"_, định nghĩa **Workspaces**:
+    ```json
+    {
+      "private": true,
+      "workspaces": [
+        "src", // FE (Next.js)
+        "server" // BE (Node.js)
+      ]
+    }
+    ```
+  - Khi đó:
+    - **FE và BE** vẫn có `package.json` riêng.
+    - Nhưng `node_modules` gom chung ở _"root"_ → cài `dependency` nhanh hơn.
+    - Có thể chia sẻ `lib` chung (ví dụ _"eslint-config, tsconfig, utils"_).
+
 ### Framework
 
 - 🔗 Sử dụng [Next.js](https://nextjs.org/) là một **React Framework cho Web**.
@@ -245,7 +291,14 @@
       - Viết `className` gọn gàng, có điều kiện
       - Tránh chuỗi `class` dài dòng hoặc nhiều if/else
 
-### Web Tools
+### Dababase
+
+- 🌐 Sử dụng `PostgreSQL` (hay gọi tắt là `Postgres`):
+  - 🔗 [PostgreSQL Downloads](https://www.postgresql.org/download/)
+  - ✍🏻 [How to Install PostgreSQL on Mac | Install PostgreSQL on macOS](https://www.youtube.com/watch?v=PShGF_udSpk)
+  - ‼️ Đảm bảo bạn có cài `pgAdmin` để kết nối với **Database** và xem những gì diễn ra bên trong và lưu pass **SuperUser** cẩn thận
+
+## Web Tools
 
 - [download-directory • github • io](https://download-directory.github.io/)
   - ❌ GitHub không hỗ trợ tải trực tiếp một thư mục trong một Repo.
