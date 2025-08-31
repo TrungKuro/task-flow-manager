@@ -371,33 +371,64 @@
 ## 🔗 Package Database
 
 - Cài ở `devDependencies`:
-  - 🔗 [ts-node](https://www.npmjs.com/package/ts-node)
-    - 👉🏻 Là một **TypeScript** execution engine cho **Node.js**
-    - ⚡️ Chức năng chính:
-      - Cho phép chạy trực tiếp file `(.ts)` **(TypeScript)** mà không cần build ra `(.js)` **(JavaScript)** trước bằng `tsc`
-      - Tự động transpile _"TypeScript → JavaScript"_ rồi nạp vào **Node.js** runtime
-      - Hữu ích cho development (chạy nhanh, test code, script)
-  - 🔗 [typescript](https://www.npmjs.com/package/typescript)
-    - 👉🏻 **TypeScript** là ngôn ngữ lập trình mở rộng từ **JavaScript** + bộ công cụ compiler `(tsc)`.
-    - ⚡️ Chức năng chính:
-      - Cung cấp **TypeScript Compiler** `(tsc)` ➡️ Chuyển file `(.ts) / (.tsx)` thành **JavaScript** thuần để **Node.js** hoặc trình duyệt chạy được.
-      - Kiểm tra kiểu **(Type Checking)** ➡️ Giúp phát hiện lỗi ngay khi code, trước khi chạy.
-      - Hỗ trợ **IDE / Editor** ➡️ Cung cấp _"IntelliSense (gợi ý code)"_, autocomplete, go-to-definition… ➡️ Nhờ file `tsconfig.json`, bạn có thể cấu hình strict mode, target ES version, module system…
-  - 🔗 [@types/node](https://www.npmjs.com/package/@types/node)
-    - 👉🏻 Là _"type definition (khai báo kiểu)"_ cho **Node.js**, dùng trong **TypeScript**.
-    - ⚡️ Chức năng chính:
-      - Giúp **TypeScript** hiểu được các `API` có sẵn của **Node.js** (fs, path, http, process, Buffer, …)
+  - Các gói <u>tạo **WorkSpace**</u>cho dự án **Server**:
+    - 🔗 [ts-node](https://www.npmjs.com/package/ts-node)
+      - 👉🏻 Là một **TypeScript** execution engine cho **Node.js**
+      - ⚡️ Chức năng chính:
+        - Cho phép chạy trực tiếp file `(.ts)` **(TypeScript)** mà không cần build ra `(.js)` **(JavaScript)** trước bằng `tsc`
+        - Tự động transpile _"TypeScript → JavaScript"_ rồi nạp vào **Node.js** runtime
+        - Hữu ích cho development (chạy nhanh, test code, script)
+    - 🔗 [typescript](https://www.npmjs.com/package/typescript)
+      - 👉🏻 **TypeScript** là ngôn ngữ lập trình mở rộng từ **JavaScript** + bộ công cụ compiler `(tsc)`.
+      - ⚡️ Chức năng chính:
+        - Cung cấp **TypeScript Compiler** `(tsc)` ➡️ Chuyển file `(.ts) / (.tsx)` thành **JavaScript** thuần để **Node.js** hoặc trình duyệt chạy được.
+        - Kiểm tra kiểu **(Type Checking)** ➡️ Giúp phát hiện lỗi ngay khi code, trước khi chạy.
+        - Hỗ trợ **IDE / Editor** ➡️ Cung cấp _"IntelliSense (gợi ý code)"_, autocomplete, go-to-definition… ➡️ Nhờ file `tsconfig.json`, bạn có thể cấu hình strict mode, target ES version, module system…
+    - 🔗 [@types/node](https://www.npmjs.com/package/@types/node)
+      - 👉🏻 Là _"type definition (khai báo kiểu)"_ cho **Node.js**, dùng trong **TypeScript**.
+      - ⚡️ Chức năng chính:
+        - Giúp **TypeScript** hiểu được các `API` có sẵn của **Node.js** (fs, path, http, process, Buffer, …)
+  - Các gói hỗ trợ trong quá trình <u>tạo `API`</u> cho _Client "call" Server_:
+    - 🔗 [rimraf](https://www.npmjs.com/package/rimraf)
+      - 👉 <u>Xóa file/thư mục "đệ quy"</u> _(recursive)_, giống [`rm -rf`], hay dùng để [`clean dist/`] trước khi build.
+    - 🔗 [concurrently](https://www.npmjs.com/package/concurrently)
+      - 👉 <u>Chạy nhiều lệnh song song</u> trong 1 `Terminal` (ví dụ chạy `server + client` cùng lúc).
+    - 🔗 [nodemon](https://www.npmjs.com/package/nodemon)
+      - 👉 <u>Tự động "restart"</u> **Server Node.js** khi có thay đổi file (tiện cho _"dev"_).
+    - 🔗 [@types/express](https://www.npmjs.com/package/@types/express)
+      - 👉🏻 Chứa các định nghĩa kiểu cho **Framework** `Express`
+    - 🔗 [@types/cors](https://www.npmjs.com/package/@types/cors)
+      - 👉🏻 Chứa các định nghĩa kiểu cho `CORS`
+    - 🔗 [@types/morgan](https://www.npmjs.com/package/@types/morgan)
+      - 👉🏻 Chứa các định nghĩa kiểu cho `Morgan`
+    - 🔗 [@types/node](https://www.npmjs.com/package/@types/node)
+      - 👉🏻 Chứa các định nghĩa kiểu cho `Node`
+
 - Cài ở `dependencies`:
-  - 🔗 [prisma](https://www.npmjs.com/package/prisma)
-    - 👉🏻 Là `ORM (Object Relational Mapper)` hiện đại cho **Node.js** & **TypeScript** 🚀.
-    - 🔹 Vì sao nhiều người chọn `prisma`?
-      - An toàn với **TypeScript** _type-safe (autocomplete + kiểm lỗi compile-time)_.
-      - Nhanh hơn viết `raw SQL`.
-      - Tự động `generate client code` → giảm lỗi, tăng năng suất.
-      - Hỗ trợ nhiều **DB** _(Postgres, MySQL, SQLite, SQL Server, MongoDB)_.
-    - 💎 Cung cấp <u>công cụ CLI</u> `(schema, migrate, generate)`. Không import vào code.
-  - 🔗 [@prisma/client](https://www.npmjs.com/package/@prisma/client)
-    - 👉🏻 Là thư viện runtime (dùng trong code để <u>query DB</u>).
+  - Các gói <u>tạo liên kết</u> **Server** với **Database**:
+    - 🔗 [prisma](https://www.npmjs.com/package/prisma)
+      - 👉🏻 Là `ORM (Object Relational Mapper)` hiện đại cho **Node.js** & **TypeScript** 🚀.
+      - 🔹 Vì sao nhiều người chọn `prisma`?
+        - An toàn với **TypeScript** _type-safe (autocomplete + kiểm lỗi compile-time)_.
+        - Nhanh hơn viết `raw SQL`.
+        - Tự động `generate client code` → giảm lỗi, tăng năng suất.
+        - Hỗ trợ nhiều **DB** _(Postgres, MySQL, SQLite, SQL Server, MongoDB)_.
+      - 💎 Cung cấp <u>công cụ CLI</u> `(schema, migrate, generate)`. Không import vào code.
+    - 🔗 [@prisma/client](https://www.npmjs.com/package/@prisma/client)
+      - 👉🏻 Là thư viện runtime (dùng trong code để <u>query DB</u>).
+  - Các gói giúp <u>tạo `API`</u> cho _Client "call" Server_ để thao tác data từ **Database**:
+    - 🔗 [dotenv](https://www.npmjs.com/package/dotenv)
+      - 👉🏻 Giúp quản lý _"biến môi trường"_ trong **Node.js**
+    - 🔗 [express](https://www.npmjs.com/package/express)
+      - 👉 `Framework Web` cho **Node.js**, giúp <u>tạo **Server**</u>, định nghĩa `Route (API)`, `middleware` dễ dàng.
+    - 🔗 [cors](https://www.npmjs.com/package/cors)
+      - 👉 Cho phép **Server** xử lý `Cross-Origin Resource Sharing` (các _"request"_ từ _"domain"_ khác).
+    - 🔗 [body-parser](https://www.npmjs.com/package/body-parser)
+      - 👉 `Middleware` để _"parse request body"_ (`JSON`, **Form Data**) thành `Object` trong `(req.body)`.
+    - 🔗 [morgan](https://www.npmjs.com/package/morgan)
+      - 👉 `Middleware` để _"log request HTTP"_ (Method, URL, status code, response time…).
+    - 🔗 [helmet](https://www.npmjs.com/package/helmet)
+      - 👉 `Middleware` <u>bảo mật</u>, tự động set nhiều `HTTP Header` để <u>chống tấn công phổ biến</u> (XSS, clickjacking, sniffing…).
 
 # ⭐️ Prisma
 
@@ -450,7 +481,6 @@
 
   ```json
   "scripts": {
-    // ...,
     "seed": "ts-node prisma/seed.ts"
   },
   ```
@@ -541,3 +571,128 @@
   - `Project` ↔ `Task`: mỗi project có nhiều task.
   - `User` ↔ `Task`: user có thể là tác giả, được giao, hoặc tham gia task.
   - `Task` ↔ `Comment/Attachment`: task có comment, có file đính kèm.
+
+# 💎 Backend API
+
+- ⚠️ Tạo thủ công thư mục `(/src)` và file `index.ts` bên trong.
+- ✅ File **TypeScript** này có vai trò là `entry point` của ứng dụng.
+  - 🧐 `Entry Point` là gì?
+    - ?!
+  - 1️⃣ **Điểm khởi động Server**:
+    - Đây là file mà **Node.js** (hoặc `ts-node`) sẽ chạy đầu tiên.
+    - Thường chứa code để:
+      - Import `Express` _(hoặc `NestJS` app)_.
+      - Cấu hình `middleware` _(body-parser, cors, helmet...)_.
+      - Đăng ký `Routes` _(API endpoints)_.
+      - Lắng nghe `Port` _(app.listen(3000))_.
+      - ...
+  - 2️⃣ **Điểm tập trung để tổ chức code**:
+    - Các **module** khác (`routes/`, `controllers/`, `services/`, `db/`) sẽ được **import** và khởi tạo từ đây.
+    - Giúp bạn không phải chạy từng file lẻ, chỉ cần `node dist/index.js`.
+  - 3️⃣ **Liên kết với "script" trong `package.json`**:
+    - Cả giai đoạn sản xuất _"production"_ `(start)` và giai đoạn phát triển _"development"_ `(dev)` đều chạy từ file `index.ts` này.
+
+## 🏆 CORS
+
+?!
+
+## JSON ➡️ Object
+
+- 🧐 `(req.body)`
+  - ?!
+
+- ⚙️ Kỹ thuật _"parse request body"_ cho **Form Data**:
+  - ?!
+
+## 🏆 HTTP
+
+- ⚙️ Các kỹ thuật _"log request HTTP"_:
+
+  ```
+  1️⃣ Method
+  2️⃣ URL
+  3️⃣ Status Code
+  4️⃣ Response Time
+  ```
+
+  - ?!
+
+- 🐞 `HTTP Header` và các cuộc tấn công mạng web:
+
+  ```
+  1️⃣ XSS
+  2️⃣ ClickJacking
+  3️⃣ Sniffing
+  …
+  ```
+
+  - ?!
+
+## ‼️ File/Folder Recursive
+
+?!
+
+## Các Package hỗ trợ cho Back-End
+
+- 💡 3 gói này giúp giai đoạn _"dev backend"_ nhanh, gọn, không bị lỗi **build** cũ, không phải **restart** thủ công, và dễ chạy nhiều **tool** cùng lúc.
+  - `rimraf` → dọn build cũ để tránh lỗi.
+  - `nodemon` → tự reload server khi code thay đổi.
+  - `concurrently` → chạy nhiều tiến trình dev cùng lúc.
+
+- 📌 Gói `rimraf`
+  - ⚠️ Khi bạn <u>build code</u> **TypeScript** `(.ts)` → **Node.js** `(.tsc)`, <u>output</u> thường nằm trong thư mục `dist/`.
+  - ❌ Nếu không xoá trước, các file cũ vẫn nằm lại → dễ gây lỗi.
+  - ✅ `rimraf` giúp <u>clean</u> `dist/` trước mỗi lần **Build**, <u>đảm bảo thư mục build luôn sạch</u>.
+  - 👉 Cấu hình trong _"script"_ cho **Build**:
+
+    ```json
+    "scripts": {
+      "build": "rimraf dist && npx tsc"
+    }
+    ```
+
+    - Khi nhập lệnh `npm run build`
+      - 1️⃣ `rimraf dist` → <u>xoá thư mục build cũ</u> `(dist/)`.
+      - 2️⃣ `npx tsc` → biên dịch **TypeScript** `(.ts)` trong thư mục `src/` sang **JavaScript** `(.js)` vào thư mục `(dist/)`.
+      - ⭐️ Đảm bảo build sạch, không dính file rác cũ.
+
+- 📌 Gói `nodemon`
+  - ❌ Khi _"code server"_, bạn <u>thay đổi file</u> → **Node.js** <u>không tự reload</u>.
+  - ⚠️ Phải dừng & chạy lại thủ công → rất mất thời gian.
+  - ✅ `nodemon` sẽ _"watch"_ <u>file thay đổi</u> ➡️ <u>tự động restart server</u>.
+- 📌 Gói `concurrently`
+  - ⚠️ Khi _"dev"_ thường phải <u>chạy nhiều process cùng lúc</u>:
+    - `Server Backend` (Node/Express/Nest).
+    - `Database` (Docker, hoặc local Postgres).
+    - `Tool` khác (ví dụ Prisma Studio, hay watch build).
+  - ‼️ Nếu chạy thủ công từng `Terminal` thì bất tiện.
+  - 💎 `concurrently` cho phép chạy nhiều lệnh song song trong 1 script.
+
+- 👉 Cấu hình trong _"script"_ cho **Dev**:
+
+  ```json
+  "scripts": {
+    "dev": "npm run build && concurrently \"npx tsc -w\" \"nodemon --exec ts-node src/index.ts\""
+  }
+  ```
+
+  - Khi nhập lệnh `npm run dev` (giai đoạn **DEV**)
+    - 1️⃣ `npm run build` → build một lần đầu tiên để có `(dist/)` sẵn (đã thêm tự _"clean"_ thư mục build cũ).
+    - 2️⃣ `concurrently` chạy song song 2 tiến trình:
+      - `"npx tsc -w"` → chạy **TypeScript Compiler** ở _"watch mode"_ (tự _"build"_ sang **JS** khi bạn sửa code).
+      - `"nodemon --exec ts-node src/index.ts"` → dùng `ts-node` để chạy code **TypeScript** trực tiếp (tự restart khi bạn sửa file).
+  - ⭐️ Tóm lại:
+    - `tsc -w` ➡️ giữ cho thư mục `(dist/)` luôn update.
+    - `nodemon` ➡️ chạy code **TypeScript** trực tiếp trong _"dev"_ (không cần _"build"_ lại thủ công).
+
+- 🏆 3 package này `(rimraf + nodemon + concurrently)` đã hỗ trợ rất nhiều trong giai đoạn _"dev"_ cho **Back-End**.
+  - 👉🏻 Cuối cùng là giai đoạn _"production"_ với cấu hình trong _"script"_ cho **Start**:
+    ```json
+    "scripts": {
+      "start": "npm run build && node dist/index.js"
+    }
+    ```
+  - 👉🏻 Khi nhập lệnh `npm start`
+    - `npm run build` ➡️ <u>build lại</u> code trước (đã kèm tính năng tự động _"clean"_ thư mục build cũ).
+    - `node dist/index.js` ➡️ <u>chạy server</u> bằng **Node.js** từ code đã build.
+    - ⚠️ Đây là lệnh dùng trong _"production"_ (không dùng **TypeScript** trực tiếp nữa).
