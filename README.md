@@ -299,6 +299,11 @@
   - ✍🏻 [How to Install PostgreSQL on Mac | Install PostgreSQL on macOS](https://www.youtube.com/watch?v=PShGF_udSpk)
   - ‼️ Đảm bảo bạn có cài `pgAdmin` để kết nối với **Database** và xem những gì diễn ra bên trong và lưu pass **SuperUser** cẩn thận
 
+### API
+
+- 🌐 Sử dụng `Postman` dùng để test và quản lý `API`.
+  - 🔗 [Postman](https://www.postman.com/)
+
 ## Web Tools
 
 - [download-directory • github • io](https://download-directory.github.io/)

@@ -95,10 +95,6 @@
   - `File` uploads/downloads
   - `Authentication` workflows
 
-## HTTP Methods
-
-?!
-
 # Pakage [Redux](https://redux.js.org/)
 
 - 👉 `Redux` là thư viện _"quản lý state"_ cho **JavaScript apps** (phổ biến trong **React**).
