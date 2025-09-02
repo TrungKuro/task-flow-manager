@@ -31,24 +31,28 @@ const ProjectHeader = ({ activeTab, setActiveTab }: ProjectHeaderProps) => {
       <div className="flex flex-wrap-reverse gap-2 border-y border-gray-200 pt-2 pb-[8px] md:items-center dark:border-stroke-dark">
         {/* Layout Tabs */}
         <div className="flex flex-1 items-center gap-2 md:gap-4">
+          {/* Board Layout */}
           <TabButton
             name="Board"
             icon={<Grid3x3 className="h-5 w-5" />}
             setActiveTab={setActiveTab}
             activeTab={activeTab}
           />
+          {/* List Layout */}
           <TabButton
             name="List"
             icon={<List className="h-5 w-5" />}
             setActiveTab={setActiveTab}
             activeTab={activeTab}
           />
+          {/* Time Layout */}
           <TabButton
             name="Timeline"
             icon={<Clock className="h-5 w-5" />}
             setActiveTab={setActiveTab}
             activeTab={activeTab}
           />
+          {/* Table Layout */}
           <TabButton
             name="Table"
             icon={<Table className="h-5 w-5" />}
