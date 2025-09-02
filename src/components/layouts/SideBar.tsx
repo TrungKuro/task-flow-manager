@@ -28,6 +28,7 @@ import {
 
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { setIsSidebarCollapsed } from "@/redux/slice/state";
+import { useGetProjectsQuery } from "@/redux/slice/api";
 
 /* ------------------------------------------------------------------------- */
 /*                               MAIN COMPONENT                              */
@@ -41,6 +42,8 @@ const SideBar = () => {
   const isSidebarCollapsed = useAppSelector(
     (state) => state.global.isSidebarCollapsed,
   );
+
+  const { data: projects } = useGetProjectsQuery();
 
   return (
     <div
@@ -112,6 +115,16 @@ const SideBar = () => {
             <ChevronDown className="h-5 w-5" />
           )}
         </button>
+        {/* Projects List */}
+        {showProjects &&
+          projects?.map((project) => (
+            <SidebarLink
+              key={project.id}
+              icon={Briefcase}
+              label={project.name}
+              href={`/projects/${project.id}`}
+            />
+          ))}
 
         {/* Priority Links */}
         <button

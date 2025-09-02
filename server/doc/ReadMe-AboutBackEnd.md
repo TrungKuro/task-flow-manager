@@ -56,10 +56,18 @@
 - ⚙️ Kỹ thuật _"cross-origin requests"_ từ **Frontend**:
   - ?!
 
-## JSON ➡️ Object
+## JSON ↔️ Object
 
 - 🧐 `(req.body)`
-  - ?!
+  - 👉 Là dữ liệu mà **Client** gửi kèm trong phần _"body"_ của **HTTP Request**, thường dùng với:
+    - **Create** - `(POST)`
+    - **Update** - `(PATCH)`
+    - **Update** _"all"_ - `(PUT)`
+  - 👉 Nói ngắn gọn: `req.body` = dữ liệu _"payload"_ từ **Client** gửi lên **Server**.
+- ‼️ Bên **Frontend** khi gửi dữ liệu qua `req.body` (thường bằng `fetch` hay `axios`) thì:
+  - ✅ `Object JS` phải được chuyển thành` JSON string`
+  - ⚠️ Phải kèm `header` _"Content-Type": "application/json"_ để **Server** hiểu dữ liệu là `JSON`.
+  - 👉 Tóm gọn: **Frontend** phải `stringify` **Object** ➡️ **JSON** + set `Content-Type`, thì **Server** mới _"parse"_ ra `req.body` đúng dạng **Object**.
 
 - ⚙️ Kỹ thuật _"parse request body"_ cho **Form Data**:
   - ?!
@@ -77,8 +85,6 @@
   3️⃣ Status Code
   4️⃣ Response Time
   ```
-
-  - ?!
 
 - 🔐 Bảo mật `HTTP Header` và các cuộc _"tấn công mạng"_ 🐞:
 
@@ -127,6 +133,24 @@
     - `DELETE` → xóa dữ liệu _(delete)_.
   - 👉 Nói ngắn gọn: `HTTP Method` = hành động mà **Client** muốn **Server** thực hiện trên _"resource"_.
 
+- `URL (Uniform Resource Locator)` 👉 là địa chỉ duy nhất để truy cập một tài nguyên trên **Internet**.
+  - 📌 Cấu trúc cơ bản:
+
+    ```
+    protocol://hostname:port/path?query#fragment
+    ```
+
+    - 1️⃣ `protocol` → giao thức (`http`, `https`, …).
+    - |
+    - 2️⃣ `hostname` → tên miền hoặc `IP` (vd: `localhost`, _"google.com"_).
+    - 2️⃣ `port` → cổng (mặc định `80` cho `http`, `443` cho `https`).
+    - |
+    - 3️⃣ `path` → đường dẫn đến tài nguyên (_"`/`users/1"_).
+    - 3️⃣ `query` → tham số truyền kèm (_"`?`projectId`=`1"_).
+    - 3️⃣ `fragment` → phần đánh dấu trong tài liệu (_"`#`section1"_).
+
+  - 👉 Nói ngắn gọn: `URL` = _“địa chỉ đường đi”_ để **Client** tìm tới đúng tài nguyên trên **Server**.
+
 - `Status Code` 👉 là mã số trong _"HTTP Response"_ để cho biết kết quả xử lý _"request"_ từ **Server**.
   - 📌 Các nhóm chính:
     - `1xx` → Thông tin _(info)_.
@@ -135,6 +159,8 @@
     - `4xx` → Lỗi phía **Slient**, ví dụ `400 Bad Request`, `401 Unauthorized`, `404 Not Found`.
     - `5xx` → Lỗi phía **Server**, ví dụ `500 Internal Server Error`.
   - 👉 Nói ngắn gọn: `Status Code` = _“thông báo kết quả”_ cho mỗi **Request HTTP**.
+
+- `Response Time` ?!
 
 ## Các Package hỗ trợ cho Back-End
 

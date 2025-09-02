@@ -188,7 +188,7 @@
       - 👉🏻 Data fetching: `fetch()` với `caching tự động`
       ```
       app/
-      ├── layout.js          # Root layout
+      ├── layout.js         # Root layout
       ├── page.js           # Home page
       ├── about/
       │   └── page.js       # /about
