@@ -127,6 +127,15 @@
     - `DELETE` → xóa dữ liệu _(delete)_.
   - 👉 Nói ngắn gọn: `HTTP Method` = hành động mà **Client** muốn **Server** thực hiện trên _"resource"_.
 
+- `Status Code` 👉 là mã số trong _"HTTP Response"_ để cho biết kết quả xử lý _"request"_ từ **Server**.
+  - 📌 Các nhóm chính:
+    - `1xx` → Thông tin _(info)_.
+    - `2xx` → Thành công _(success)_, ví dụ `200 OK`, `201 Created`.
+    - `3xx` → Chuyển hướng _(redirect)_, ví dụ `301 Moved Permanently`.
+    - `4xx` → Lỗi phía **Slient**, ví dụ `400 Bad Request`, `401 Unauthorized`, `404 Not Found`.
+    - `5xx` → Lỗi phía **Server**, ví dụ `500 Internal Server Error`.
+  - 👉 Nói ngắn gọn: `Status Code` = _“thông báo kết quả”_ cho mỗi **Request HTTP**.
+
 ## Các Package hỗ trợ cho Back-End
 
 - 💡 3 gói này giúp giai đoạn _"dev backend"_ nhanh, gọn, không bị lỗi **build** cũ, không phải **restart** thủ công, và dễ chạy nhiều **tool** cùng lúc.
@@ -204,9 +213,9 @@
       [0] 12:04:52 AM - Found 0 errors. Watching for file changes.
       [1] [dotenv@17.2.1] injecting env (2) from .env -- tip: 📡 auto-backup env with Radar: https://dotenvx.com/radar
       [1] Server running on Port 8000
-      [1] 127.0.0.1 - - [01/Sep/2025:17:05:04 +0000] "GET / HTTP/1.1" 200 18
       ```
-  - ➡️ Lệnh `curl localhost:8000`
+
+  - ➡️ Lệnh `curl "localhost:8000"`
     - 📌 Ý nghĩa:
       - `curl` 👉 công cụ dòng lệnh để gửi **HTTP "request"**.
       - `localhost` 👉 địa chỉ máy local (tương ứng với `127.0.0.1`).
@@ -215,6 +224,61 @@
     - 📌 Kết quả:
       - Nếu **Server Backend** (Express, NestJS, Django, …) <u>đang lắng nghe</u> trên **Port** 8000, bạn <u>sẽ nhận được _"response"_</u> (HTML, JSON, text…).
         ```
-        This is Home Route%
+        Server : [1] 127.0.0.1 - - [01/Sep/2025:17:05:04 +0000] "GET / HTTP/1.1" 200 18
+        Client : This is Home Route%
         ```
       - Nếu không có **Server** hoặc **Server** chạy **Port** khác → báo lỗi _"Connection refused"_.
+
+---
+
+- ‼️ **Command for resetting ID in Database**:
+  - 💎 Câu lệnh này dùng để _"reset sequence"_ của <u>cột</u> `id` cho đồng bộ với dữ liệu thực tế trong <u>bảng</u>.
+    - Nếu bạn đã <u>chèn thủ công dữ liệu</u> (vd: qua `Postman`) có `id` lớn hơn mà quên cập nhật **Sequence → Insert** tiếp sẽ bị lỗi _"duplicate key"_.
+    - Lệnh này sẽ đảm bảo _"sequence"_ tiếp tục đếm từ `[max(id)+1]`.
+
+  - 👉🏻 Trong phần mềm **PostgreSQL** ➡️ chọn đúng **Table** cần lấy _"sequence"_ ➡️ mở `Query Tool` và nhập đoạn code sau vào _"tab"_ `Query` ➡️ nhấn nút `Execute Script` ➡️ lúc này tại _"tab"_ `Data Output` sẽ hiện _"bảng setval (bigint)"_ với giá trị `id` cao nhất đã +1 để `Postman` dùng với phương thức `(POST)` ⚠️ Đừng save đoạn script này.
+
+  ```sql
+  SELECT setval(
+    pg_get_serial_sequence('"[DATA_MODEL_NAME_HERE]"', 'id'),
+    coalesce(max(id)+1, 1),
+    false
+  )
+  FROM "[DATA_MODEL_NAME_HERE]";
+  ```
+
+  - 📌 Ý nghĩa từng phần:
+    - `pg_get_serial_sequence('"[DATA_MODEL_NAME_HERE]"', 'id')`
+      - Lấy tên _"sequence"_ mà **PostgreSQL** đang dùng cho <u>cột</u> `id` của <u>bảng</u> `[DATA_MODEL_NAME_HERE]`.
+      - _"sequence"_ = <u>bộ đếm auto-increment</u> trong **PostgreSQL** (tạo giá trị cho `SERIAL` hoặc `BIGSERIAL`).
+    - `max(id)+1`
+      - Tìm giá trị `id` lớn nhất hiện tại trong <u>bảng</u>, rồi cộng thêm 1.
+      - Đây sẽ là giá trị tiếp theo mà _"sequence"_ nên bắt đầu.
+      - ⚡️ Trường hợp <u>bảng rỗng</u> thì `max(id) = NULL`.
+    - `coalesce(max(id)+1, 1)`
+      - _"coalesce"_ chọn giá trị đầu tiên khác `NULL`.
+      - Nếu <u>bảng</u> có dữ liệu → `max(id)+1`.
+      - Nếu <u>bảng rỗng</u> → `1`.
+    - `setval(sequence, value, false)`
+      - Cập nhật _"sequence"_ về giá trị `value` (cũng chính là `coalesce(max(id)+1, 1)`).
+      - Tham số `false` nghĩa là giá trị tiếp theo được tạo ra chính xác bằng `value` (nếu để `true` thì giá trị kế tiếp sẽ là `value+1`).
+
+  - 🎯 Tóm gọn: Lệnh này = _"đồng bộ `sequence`" (auto-increment id)_ với dữ liệu hiện có trong <u>bảng</u> → tránh lỗi khi _"insert"_ tiếp.
+
+---
+
+- ➡️ Lệnh `curl "localhost:8000/projects"`
+  - 📌 Chức năng: trả về `JSON` chứa danh sách tất cả **Project** hiện có trong **DB**.
+  - 🧐 Để tạo mới **Project** và lưu vào **DB**.
+    - Cần sử dụng `Postman` để thực hiện phương thức **HTTP (POST)** cũng với **URL**: `localhost:8000/projects`
+    - Và cung cấp một `body` (chứa `JSON` của **Project** mới) đi kèm phương thức `(POST)`
+
+- ➡️ Lệnh `curl "localhost:8000/tasks?projectId=[id]"`
+  - 📌 Chức năng: trả về `JSON` chứa danh sách tất cả **Task** hiện có của **Project[id]** (nhập số `id`) trong **DB**.
+  - 🧐 Để tạo mới **Task** và lưu vào **DB**.
+    - Cần sử dụng `Postman` để thực hiện phương thức **HTTP (POST)** với **URL**: `localhost:8000/tasks`
+    - Và cung cấp một `body` (chứa `JSON` của **Task** mới) đi kèm phương thức `(POST)`
+
+- ➡️ Để cập nhập giá trị mới cho cột `status` của bảng **Task[id]** (nhập số `id`) trong **DB**.
+  - Cần sử dụng `Postman` để thực hiện phương thức **HTTP (PATCH)** với **URL**: `localhost:8000/tasks/[id]/status`
+  - Và cung cấp một `body` (chứa `JSON` phần `status` của **Task** đó) đi kèm phương thức `(PATCH)`

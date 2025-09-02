@@ -18,8 +18,8 @@ const morgan_1 = __importDefault(require("morgan")); // HTTP request logger midd
 /*                               ROUTE IMPORTS                               */
 /* ------------------------------------------------------------------------- */
 // TODO: Import các "Route Handlers" khi tạo APIs [EndPoints]
-// import projectRoutes from "./routes/projectRoutes";
-// import taskRoutes from "./routes/taskRoutes";
+const projectRoutes_1 = __importDefault(require("./routes/projectRoutes"));
+const taskRoutes_1 = __importDefault(require("./routes/taskRoutes"));
 // import searchRoutes from "./routes/searchRoutes";
 // import userRoutes from "./routes/userRoutes";
 // import teamRoutes from "./routes/teamRoutes";
@@ -46,10 +46,10 @@ app.get("/", (req, res) => {
     res.send("This is Home Route");
 });
 // Các API Routes khác:
+app.use("/projects", projectRoutes_1.default);
+app.use("/tasks", taskRoutes_1.default);
 // app.use("/users", userRoutes);
 // app.use("/teams", teamRoutes);
-// app.use("/projects", projectRoutes);
-// app.use("/tasks", taskRoutes);
 // app.use("/search", searchRoutes);
 /* ------------------------------------------------------------------------- */
 /*                                   SERVER                                  */
