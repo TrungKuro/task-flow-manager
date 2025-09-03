@@ -48,7 +48,7 @@ const SideBar = () => {
   return (
     <div
       className={cn(
-        "fixed z-40 flex h-full flex-col justify-between overflow-y-auto bg-white shadow-xl transition-all duration-300 dark:bg-black",
+        "fixed z-40 flex h-full flex-col justify-between overflow-y-auto bg-white shadow-xl dark:bg-black",
         isSidebarCollapsed ? "hidden w-0" : "w-64",
       )}
     >
@@ -190,7 +190,7 @@ const SidebarLink = ({ href, icon: Icon, label }: SidebarLinkProps) => {
   return (
     <Link href={href} className="w-full">
       <div
-        className={`relative flex cursor-pointer items-center gap-3 transition-colors hover:bg-gray-100 dark:bg-black dark:hover:bg-gray-700 ${
+        className={`relative flex cursor-pointer items-center gap-3 hover:bg-gray-100 dark:bg-black dark:hover:bg-gray-700 ${
           isActive ? "bg-gray-100 text-white dark:bg-gray-600" : ""
         } justify-start px-8 py-3`}
       >
