@@ -1,6 +1,6 @@
 import React from "react";
 
-import { dataGridSxStyles } from "@/lib/utils";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Header from "@/components/common/Header";
 
@@ -86,8 +86,14 @@ const TableView = ({ id, setIsModalNewTaskOpen }: TableViewProps) => {
   if (isLoading) return <div>Loading...</div>;
   if (error || !tasks) return <div>An error occurred while fetching tasks</div>;
 
+  const theme = createTheme({
+    palette: {
+      mode: isDarkMode ? "dark" : "light",
+    },
+  });
+
   return (
-    <div className="h-[540px] w-full px-4 pb-8 xl:px-6">
+    <div className="w-full px-4 pb-8 xl:px-6">
       {/* Header & Button Add */}
       <div className="pt-5">
         <Header
@@ -105,11 +111,11 @@ const TableView = ({ id, setIsModalNewTaskOpen }: TableViewProps) => {
       </div>
 
       {/* Table of Tasks */}
-      <DataGrid
-        rows={tasks || []}
-        columns={columns}
-        sx={dataGridSxStyles(isDarkMode)}
-      />
+      <div className="h-fit w-full">
+        <ThemeProvider theme={theme}>
+          <DataGrid rows={tasks || []} columns={columns} />
+        </ThemeProvider>
+      </div>
     </div>
   );
 };
