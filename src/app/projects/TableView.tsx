@@ -1,6 +1,6 @@
 import React from "react";
 
-import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";
+import { dataGridSxStyles } from "@/lib/utils";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Header from "@/components/common/Header";
 
@@ -108,7 +108,6 @@ const TableView = ({ id, setIsModalNewTaskOpen }: TableViewProps) => {
       <DataGrid
         rows={tasks || []}
         columns={columns}
-        className={dataGridClassNames}
         sx={dataGridSxStyles(isDarkMode)}
       />
     </div>
