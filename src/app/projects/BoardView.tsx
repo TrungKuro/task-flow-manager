@@ -48,7 +48,9 @@ const BoardView = ({ id, setIsModalNewTaskOpen }: BoardViewProps) => {
 
   return (
     <DndProvider backend={HTML5Backend}>
+      {/* Drag and Drop Area */}
       <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 xl:grid-cols-4">
+        {/* List of Task Column (by "status") */}
         {taskStatus.map((status) => (
           <TaskColumn
             key={status}
@@ -111,20 +113,20 @@ const TaskColumn = ({
         isOver ? "bg-blue-100 dark:bg-neutral-950" : "",
       )}
     >
-      {/* Task Status Card */}
+      {/* Task "status" Column Header */}
       <div className="mb-3 flex w-full">
-        {/* Card Color */}
+        {/* "status" Color */}
         <div
           className={`w-2 !bg-[${statusColor[status]}] rounded-s-lg`}
           style={{ backgroundColor: statusColor[status] }}
         />
 
-        {/* Content of Card */}
+        {/* Header Content */}
         <div className="flex w-full items-center justify-between rounded-e-lg bg-white px-5 py-4 dark:bg-dark-secondary">
-          {/* Status Title */}
+          {/* "status" Name */}
           <h3 className="flex items-center text-lg font-semibold dark:text-white">
             {`${status} `}
-            {/* Number Tasks of Card */}
+            {/* Number of Tasks in the "status" Column */}
             <span
               className="ml-2 inline-block rounded-full bg-gray-200 p-1 text-center text-sm leading-none dark:bg-dark-tertiary"
               style={{ width: "1.5rem", height: "1.5rem" }}
@@ -135,12 +137,12 @@ const TaskColumn = ({
 
           {/* Buttons */}
           <div className="flex items-center gap-1">
-            {/* Setting */}
+            {/* Btn Setting */}
             <button className="flex h-6 w-5 items-center justify-center dark:text-neutral-500">
               <EllipsisVertical size={26} />
             </button>
 
-            {/* Add */}
+            {/* Btn Add */}
             <button
               className="flex h-6 w-6 items-center justify-center rounded bg-gray-200 dark:bg-dark-tertiary dark:text-white"
               onClick={() => setIsModalNewTaskOpen(true)}
@@ -151,7 +153,7 @@ const TaskColumn = ({
         </div>
       </div>
 
-      {/* List Tasks */}
+      {/* List of Task (by column "status") */}
       {tasks
         .filter((task) => task.status === status)
         .map((task) => (
@@ -253,7 +255,7 @@ const Task = ({ task }: TaskProps) => {
             </div>
           </div>
 
-          {/* Setting */}
+          {/* Button Setting */}
           <button className="flex h-6 w-4 flex-shrink-0 items-center justify-center dark:text-neutral-500">
             <EllipsisVertical size={26} />
           </button>
@@ -268,7 +270,7 @@ const Task = ({ task }: TaskProps) => {
             </div>
           )}
         </div>
-        {/* Time to Perform the Task */}
+        {/* Time to perform the Task */}
         <div className="text-xs text-gray-500 dark:text-neutral-500">
           {formattedStartDate && <span>{formattedStartDate} - </span>}
           {formattedDueDate && <span>{formattedDueDate}</span>}

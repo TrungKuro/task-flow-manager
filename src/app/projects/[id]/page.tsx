@@ -4,6 +4,7 @@ import React, { useState } from "react";
 
 import ProjectHeader from "../ProjectHeader";
 import BoardView from "../BoardView";
+import ListView from "../ListView";
 
 /* ------------------------------------------------------------------------- */
 /*                        URL (Path) "/projects/[id]"                        */
@@ -29,6 +30,9 @@ const ProjectPage = ({ params }: ProjectPageProps) => {
       {/* Layout view Projects */}
       {activeTab === "Board" && (
         <BoardView id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen} />
+      )}
+      {activeTab === "List" && (
+        <ListView id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen} />
       )}
     </div>
   );
