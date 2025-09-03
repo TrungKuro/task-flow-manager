@@ -84,8 +84,9 @@ body,
 }
 
 /* ------------------------------------------------------------------------- */
-
-/* TIMELINE STYLING - Tuỳ chỉnh CSS cho component "Timeline" */
+/*                             "gantt-task-react"                            */
+/*         TIMELINE STYLING - Tuỳ chỉnh CSS cho component "Timeline"         */
+/* ------------------------------------------------------------------------- */
 
 /* ➡️ Bo góc trên-trái, thêm border (trừ cạnh phải), màu viền sáng ở light mode, màu tối ở dark mode */
 .timeline ._3_ygE {

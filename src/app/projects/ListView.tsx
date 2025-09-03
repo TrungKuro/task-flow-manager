@@ -32,7 +32,7 @@ const ListView = ({ id, setIsModalNewTaskOpen }: ListViewProps) => {
 
   return (
     <div className="px-4 pb-8 xl:px-6">
-      {/* Header & Btn Add */}
+      {/* Header & Button Add */}
       <div className="pt-5">
         <Header
           name="List"
