@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import ProjectHeader from "../ProjectHeader";
 import BoardView from "../BoardView";
 import ListView from "../ListView";
+import TimelineView from "../TimelineView";
 
 /* ------------------------------------------------------------------------- */
 /*                        URL (Path) "/projects/[id]"                        */
@@ -33,6 +34,9 @@ const ProjectPage = ({ params }: ProjectPageProps) => {
       )}
       {activeTab === "List" && (
         <ListView id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen} />
+      )}
+      {activeTab === "Timeline" && (
+        <TimelineView id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen} />
       )}
     </div>
   );
