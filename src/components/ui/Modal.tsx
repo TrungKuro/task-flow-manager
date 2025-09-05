@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import Header from "./Header";
+import Header from "../common/Header";
 import { X } from "lucide-react";
 
 /* ------------------------------------------------------------------------- */

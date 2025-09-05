@@ -31,7 +31,7 @@ const ProjectHeader = ({ activeTab, setActiveTab }: ProjectHeaderProps) => {
 
   return (
     <div className="px-4 xl:px-6">
-      {/* Modal "New Project" Overlay */}
+      {/* Popup Modal "New Project" */}
       <ModalNewProject
         isOpen={isModalNewProjectOpen}
         onClose={() => setIsModalNewProjectOpen(false)}

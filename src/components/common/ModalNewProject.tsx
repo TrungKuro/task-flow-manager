@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 
-import Modal from "./Modal";
+import Modal from "../ui/Modal";
 import { formatISO } from "date-fns";
 
 import { useCreateProjectMutation } from "@/redux/slice/api";
@@ -58,6 +58,9 @@ const ModalNewProject = ({ isOpen, onClose }: ModalNewProjectProps) => {
           handleSubmit();
         }}
       >
+        {/* --------------------------------------------------------------- */}
+
+        {/* Name Project */}
         <input
           type="text"
           className={inputStyles}
@@ -65,19 +68,26 @@ const ModalNewProject = ({ isOpen, onClose }: ModalNewProjectProps) => {
           value={projectName}
           onChange={(e) => setProjectName(e.target.value)}
         />
+
+        {/* Description Project */}
         <textarea
           className={inputStyles}
           placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
+
+        {/* Start Date & End Date */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-2">
+          {/* Start Date */}
           <input
             type="date"
             className={inputStyles}
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
           />
+
+          {/* End Date */}
           <input
             type="date"
             className={inputStyles}
@@ -85,6 +95,10 @@ const ModalNewProject = ({ isOpen, onClose }: ModalNewProjectProps) => {
             onChange={(e) => setEndDate(e.target.value)}
           />
         </div>
+
+        {/* --------------------------------------------------------------- */}
+
+        {/* Button Submit */}
         <button
           type="submit"
           className={cn(

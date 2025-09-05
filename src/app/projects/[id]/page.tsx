@@ -7,6 +7,7 @@ import BoardView from "../BoardView";
 import ListView from "../ListView";
 import TimelineView from "../TimelineView";
 import TableView from "../TableView";
+import ModalNewTask from "@/components/common/ModalNewTask";
 
 /* ------------------------------------------------------------------------- */
 /*                        URL (Path) "/projects/[id]"                        */
@@ -26,6 +27,13 @@ const ProjectPage = ({ params }: ProjectPageProps) => {
 
   return (
     <div>
+      {/* Popup Modal "New Task" */}
+      <ModalNewTask
+        isOpen={isModalNewTaskOpen}
+        onClose={() => setIsModalNewTaskOpen(false)}
+        id={id}
+      />
+
       {/* Header */}
       <ProjectHeader activeTab={activeTab} setActiveTab={setActiveTab} />
 
