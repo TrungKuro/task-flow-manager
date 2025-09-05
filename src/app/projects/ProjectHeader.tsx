@@ -3,8 +3,17 @@
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 
+import ModalNewProject from "@/components/common/ModalNewProject";
 import Header from "@/components/common/Header";
-import { Clock, Filter, Grid3x3, List, Share2, Table } from "lucide-react";
+import {
+  Clock,
+  Filter,
+  Grid3x3,
+  List,
+  PlusSquare,
+  Share2,
+  Table,
+} from "lucide-react";
 
 /* ------------------------------------------------------------------------- */
 /*                               MAIN COMPONENT                              */
@@ -22,9 +31,25 @@ const ProjectHeader = ({ activeTab, setActiveTab }: ProjectHeaderProps) => {
 
   return (
     <div className="px-4 xl:px-6">
-      {/* Header */}
+      {/* Modal "New Project" Overlay */}
+      <ModalNewProject
+        isOpen={isModalNewProjectOpen}
+        onClose={() => setIsModalNewProjectOpen(false)}
+      />
+
+      {/* Header & Button Add */}
       <div className="pt-6 pb-6 lg:pt-8 lg:pb-4">
-        <Header name="Product Design Development" />
+        <Header
+          name="Product Design Development"
+          buttonComponent={
+            <button
+              className="flex items-center rounded-md bg-blue-primary px-3 py-2 text-white hover:bg-blue-600"
+              onClick={() => setIsModalNewProjectOpen(true)}
+            >
+              <PlusSquare className="mr-2 h-5 w-5" /> New Boards
+            </button>
+          }
+        />
       </div>
 
       {/* Tabs */}
@@ -64,11 +89,11 @@ const ProjectHeader = ({ activeTab, setActiveTab }: ProjectHeaderProps) => {
         {/* Function Tabs */}
         <div className="flex items-center gap-2">
           {/* Filter */}
-          <button className="cursor-pointer text-gray-500 hover:text-gray-600 dark:text-neutral-500 dark:hover:text-gray-300">
+          <button className="text-gray-500 hover:text-gray-600 dark:text-neutral-500 dark:hover:text-gray-300">
             <Filter className="h-5 w-5" />
           </button>
           {/* Share */}
-          <button className="cursor-pointer text-gray-500 hover:text-gray-600 dark:text-neutral-500 dark:hover:text-gray-300">
+          <button className="text-gray-500 hover:text-gray-600 dark:text-neutral-500 dark:hover:text-gray-300">
             <Share2 className="h-5 w-5" />
           </button>
           {/* Search */}
@@ -107,7 +132,7 @@ const TabButton = ({ name, icon, setActiveTab, activeTab }: TabButtonProps) => {
   return (
     <button
       className={cn(
-        "relative flex cursor-pointer items-center gap-2 px-1 py-2 text-gray-500 after:absolute after:-bottom-[9px] after:left-0 after:h-[1px] after:w-full hover:text-blue-600 sm:px-2 lg:px-4 dark:text-neutral-500 dark:hover:text-white",
+        "relative flex items-center gap-2 px-1 py-2 text-gray-500 after:absolute after:-bottom-[9px] after:left-0 after:h-[1px] after:w-full hover:text-blue-600 sm:px-2 lg:px-4 dark:text-neutral-500 dark:hover:text-white",
         isActive ? "text-blue-600 after:bg-blue-600 dark:text-white" : "",
       )}
       onClick={() => setActiveTab(name)}

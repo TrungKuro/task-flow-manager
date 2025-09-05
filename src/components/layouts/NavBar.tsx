@@ -22,7 +22,6 @@ const NavBar = () => {
         {/* Btn Open SideBar */}
         {!isSidebarCollapsed ? null : (
           <button
-            className="cursor-pointer"
             onClick={() => dispatch(setIsSidebarCollapsed(!isSidebarCollapsed))}
           >
             <Menu className="h-8 w-8 dark:text-white" />
@@ -32,7 +31,9 @@ const NavBar = () => {
         {/* Input Container */}
         <div className="relative flex h-min w-[200px]">
           {/* Icon */}
-          <Search className="absolute top-1/2 left-[4px] mr-2 h-5 w-5 -translate-y-1/2 transform cursor-pointer dark:text-white" />
+          <button>
+            <Search className="absolute top-1/2 left-[4px] mr-2 h-5 w-5 -translate-y-1/2 transform dark:text-white" />
+          </button>
 
           {/* Input */}
           <input
@@ -54,9 +55,9 @@ const NavBar = () => {
           )}
         >
           {isDarkMode ? (
-            <Sun className="h-6 w-6 cursor-pointer dark:text-white" />
+            <Sun className="h-6 w-6 dark:text-white" />
           ) : (
-            <Moon className="h-6 w-6 cursor-pointer dark:text-white" />
+            <Moon className="h-6 w-6 dark:text-white" />
           )}
         </button>
 
@@ -68,7 +69,9 @@ const NavBar = () => {
             isDarkMode ? "dark:hover:bg-gray-700" : "hover:bg-gray-100",
           )}
         >
-          <Settings className="h-6 w-6 cursor-pointer dark:text-white" />
+          <button>
+            <Settings className="h-6 w-6 dark:text-white" />
+          </button>
         </Link>
 
         {/* Line Separate */}

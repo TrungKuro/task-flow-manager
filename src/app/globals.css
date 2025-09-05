@@ -31,6 +31,13 @@ body,
   @apply bg-white text-sm dark:bg-black;
 }
 
+/* 
+  Thiết lập "cursor pointer" (mặc định) cho tất cả các <button>
+ */
+button {
+  cursor: pointer;
+}
+
 /* ------------------------------------------------------------------------- */
 
 /*

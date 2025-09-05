@@ -63,7 +63,7 @@ const SideBar = () => {
           {/* Btn Close SideBar */}
           {isSidebarCollapsed ? null : (
             <button
-              className="cursor-pointer py-3"
+              className="py-3"
               onClick={() => {
                 dispatch(setIsSidebarCollapsed(!isSidebarCollapsed));
               }}
@@ -106,7 +106,7 @@ const SideBar = () => {
         {/* Projects Links */}
         <button
           onClick={() => setShowProjects((prev) => !prev)}
-          className="flex w-full cursor-pointer items-center justify-between px-8 py-3 text-gray-500"
+          className="flex w-full items-center justify-between px-8 py-3 text-gray-500"
         >
           <span>Projects</span>
           {showProjects ? (
@@ -129,7 +129,7 @@ const SideBar = () => {
         {/* Priority Links */}
         <button
           onClick={() => setShowPriority((prev) => !prev)}
-          className="flex w-full cursor-pointer items-center justify-between px-8 py-3 text-gray-500"
+          className="flex w-full items-center justify-between px-8 py-3 text-gray-500"
         >
           <span>Priority</span>
           {showPriority ? (
