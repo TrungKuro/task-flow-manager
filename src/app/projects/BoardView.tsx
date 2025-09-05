@@ -117,7 +117,7 @@ const TaskColumn = ({
       <div className="mb-3 flex w-full">
         {/* "status" Color */}
         <div
-          className={`w-2 !bg-[${statusColor[status]}] rounded-s-lg`}
+          className="w-2 rounded-s-lg"
           style={{ backgroundColor: statusColor[status] }}
         />
 
