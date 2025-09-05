@@ -88,6 +88,19 @@ export interface SearchResults {
 }
 
 /* ------------------------------------------------------------------------- */
+
+export interface Team {
+  id: number; //! teamId: number;
+
+  teamName: string;
+  productOwnerUserId?: number;
+  projectManagerUserId?: number;
+
+  productOwnerUsername?: string; //!
+  projectManagerUsername?: string; //!
+}
+
+/* ------------------------------------------------------------------------- */
 /*                              API (AsyncThunk)                             */
 /* ------------------------------------------------------------------------- */
 
@@ -97,7 +110,7 @@ export const api = createApi({
     baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
   }),
   reducerPath: "api", //!
-  tagTypes: ["Projects", "Tasks", "Users"],
+  tagTypes: ["Projects", "Tasks", "Users", "Teams"],
   endpoints: (build) => ({
     /* -------------------------- Route "Project" -------------------------- */
 
@@ -165,6 +178,14 @@ export const api = createApi({
       providesTags: ["Users"],
     }),
 
+    /* ---------------------------- Route "Team" --------------------------- */
+
+    // READ - (GET): /teams
+    getTeams: build.query<Team[], void>({
+      query: () => "teams",
+      providesTags: ["Teams"],
+    }),
+
     /* --------------------------------------------------------------------- */
   }),
 });
@@ -188,4 +209,7 @@ export const {
 
   // API "User"
   useGetUsersQuery, //? GET: /users
+
+  // API "Team"
+  useGetTeamsQuery, //? GET: /teams
 } = api;

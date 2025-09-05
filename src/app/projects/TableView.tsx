@@ -83,14 +83,14 @@ const TableView = ({ id, setIsModalNewTaskOpen }: TableViewProps) => {
     isLoading,
   } = useGetTasksQuery({ projectId: Number(id) });
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error || !tasks) return <div>An error occurred while fetching tasks</div>;
-
   const theme = createTheme({
     palette: {
       mode: isDarkMode ? "dark" : "light",
     },
   });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error || !tasks) return <div>An error occurred while fetching tasks</div>;
 
   return (
     <div className="w-full px-4 pb-8 xl:px-6">

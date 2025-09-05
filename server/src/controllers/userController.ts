@@ -10,7 +10,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 /* ------------------------------------------------------------------------- */
-/*                        Controller Module "User"                        */
+/*                          Controller Module "User"                         */
 /* ------------------------------------------------------------------------- */
 
 // READ (GET) - lấy danh sách tất cả các User hiện có trong DB

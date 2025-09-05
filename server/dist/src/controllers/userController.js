@@ -8,7 +8,7 @@ const client_1 = require("@prisma/client");
 /* ------------------------------------------------------------------------- */
 const prisma = new client_1.PrismaClient();
 /* ------------------------------------------------------------------------- */
-/*                        Controller Module "User"                        */
+/*                          Controller Module "User"                         */
 /* ------------------------------------------------------------------------- */
 // READ (GET) - lấy danh sách tất cả các User hiện có trong DB
 const getUsers = async (req, res) => {

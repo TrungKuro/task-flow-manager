@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import React from "react";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -14,10 +13,10 @@ import {
 import Header from "@/components/common/Header";
 
 import { useAppSelector } from "@/redux/store";
-import { useGetUsersQuery } from "@/redux/slice/api";
+import { useGetTeamsQuery } from "@/redux/slice/api";
 
 /* ------------------------------------------------------------------------- */
-/*                            URL (Path) "/users"                            */
+/*                            URL (Path) "/teams"                            */
 /* ------------------------------------------------------------------------- */
 
 const CustomToolbar = () => (
@@ -28,32 +27,20 @@ const CustomToolbar = () => (
 );
 
 const columns: GridColDef[] = [
-  { field: "userId", headerName: "ID", width: 100 },
-  { field: "username", headerName: "Username", width: 150 },
+  { field: "id", headerName: "Team ID", width: 100 },
+  { field: "teamName", headerName: "Team Name", width: 200 },
+  { field: "productOwnerUsername", headerName: "Product Owner", width: 200 },
   {
-    field: "profilePictureUrl",
-    headerName: "Profile Picture",
-    width: 100,
-    renderCell: (params) => (
-      <div className="flex h-full w-full items-center justify-center">
-        <div className="h-9 w-9">
-          <Image
-            src={`/${params.value}`}
-            alt={params.row.username}
-            width={100}
-            height={50}
-            className="h-full rounded-full object-cover"
-          />
-        </div>
-      </div>
-    ),
+    field: "projectManagerUsername",
+    headerName: "Project Manager",
+    width: 200,
   },
 ];
 
 /* ------------------------------------------------------------------------- */
 
-const UsersPage = () => {
-  const { data: users, isLoading, isError } = useGetUsersQuery();
+const TeamsPage = () => {
+  const { data: teams, isLoading, isError } = useGetTeamsQuery();
   const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
 
   const theme = createTheme({
@@ -63,20 +50,19 @@ const UsersPage = () => {
   });
 
   if (isLoading) return <div>Loading...</div>;
-  if (isError || !users) return <div>Error fetching users</div>;
+  if (isError || !teams) return <div>Error fetching teams</div>;
 
   return (
     <div className="flex w-full flex-col p-8">
       {/* Header */}
-      <Header name="Users" />
+      <Header name="Teams" />
 
-      {/* Table of Users */}
+      {/* Table of Teams */}
       <div className="h-fit w-full">
         <ThemeProvider theme={theme}>
           <DataGrid
-            rows={users || []}
+            rows={teams || []}
             columns={columns}
-            getRowId={(row) => row.userId}
             pagination
             slots={{
               toolbar: CustomToolbar,
@@ -88,4 +74,4 @@ const UsersPage = () => {
   );
 };
 
-export default UsersPage;
+export default TeamsPage;
