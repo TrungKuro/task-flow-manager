@@ -8,8 +8,11 @@ import {
   Toolbar,
   FilterPanelTrigger,
   ExportPrint,
+  ToolbarButton,
   DataGrid,
 } from "@mui/x-data-grid";
+import Tooltip from "@mui/material/Tooltip";
+import { ListFilter, Printer } from "lucide-react";
 import Header from "@/components/common/Header";
 
 import { useAppSelector } from "@/redux/store";
@@ -21,8 +24,16 @@ import { useGetTeamsQuery } from "@/redux/slice/api";
 
 const CustomToolbar = () => (
   <Toolbar className="toolbar flex gap-2">
-    <FilterPanelTrigger />
-    <ExportPrint />
+    <Tooltip title="Filters">
+      <FilterPanelTrigger render={<ToolbarButton />}>
+        <ListFilter className="h-5 w-5" />
+      </FilterPanelTrigger>
+    </Tooltip>
+    <Tooltip title="Print">
+      <ExportPrint render={<ToolbarButton />}>
+        <Printer className="h-5 w-5" />
+      </ExportPrint>
+    </Tooltip>
   </Toolbar>
 );
 
@@ -64,9 +75,8 @@ const TeamsPage = () => {
             rows={teams || []}
             columns={columns}
             pagination
-            slots={{
-              toolbar: CustomToolbar,
-            }}
+            slots={{ toolbar: CustomToolbar }}
+            showToolbar
           />
         </ThemeProvider>
       </div>
