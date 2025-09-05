@@ -244,6 +244,11 @@
     - 🧐 Cung cấp bộ thư viện `Lucide Icon` cho các ứng dụng **React**
   - 🔗 [numeral](https://www.npmjs.com/package/numeral) ➡️ [Numeral.js](http://numeraljs.com/)
     - 🧐 Thư viện **JavaScript** để <u>định dạng và xử lý `Numeral`</u>
+  - 🔗 [lodash](https://www.npmjs.com/package/lodash)
+    - 🧐 Là một thư viện **JavaScript/TypeScript Utility** _(hàm tiện ích)_ giúp:
+      - Xử lý **Array, Object, String, Number** nhanh gọn hơn.
+      - Hỗ trợ `clone`, `merge`, `debounce`, `throttle`, `deep comparison`, `random`, `groupBy`, `uniq`, `sortBy` …
+      - Giúp code ngắn, dễ đọc, ít bug hơn so với <u>tự viết lại</u> _"hàm xử lý dữ liệu"_.
   - 🔗 [date-fns](https://www.npmjs.com/package/date-fns) ➡️ [Date-fns](https://date-fns.org/)
     - 🧐 Cung cấp bộ công cụ toàn diện nhất, nhưng đơn giản và <u>nhất quán để thao tác `Dates`</u> **JavaScript** trong **Browser** & **Node.js**
   - 🔗 [axios](https://www.npmjs.com/package/axios) ➡️ [Axios](https://axios-http.com/)
@@ -276,6 +281,8 @@
     - 🧐 Chứa các định nghĩa kiểu cho `UUID`
   - 🔗 [@types/numeral](https://www.npmjs.com/package/@types/numeral)
     - 🧐 Chứa các định nghĩa kiểu cho `Numeral`
+  - 🔗 [@types/lodash](https://www.npmjs.com/package/@types/lodash)
+    - 🧐 Chứa các định nghĩa kiểu cho `Lodash`
   - 🔗 [prettier](https://www.npmjs.com/package/prettier)
     - 🧐 Là `Code Formatter` – <u>công cụ tự động định dạng lại code</u> _(JS, TS, CSS, HTML, JSON, …)_ theo quy tắc thống nhất, giúp code sạch, dễ đọc, và đồng bộ trong cả team
   - 🔗 [prettier-plugin-tailwindcss](https://www.npmjs.com/package/prettier-plugin-tailwindcss/v/0.0.0-insiders.d539a72)

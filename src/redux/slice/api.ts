@@ -61,10 +61,11 @@ export interface User {
   userId?: number;
 
   username: string;
-  email: string;
   profilePictureUrl?: string;
   cognitoId?: string;
   teamId?: number;
+
+  email: string; //!
 }
 
 /* ------------------------------------------------------------------------- */
@@ -76,6 +77,14 @@ export interface Attachment {
   fileName: string;
   taskId: number;
   uploadedById: number;
+}
+
+/* ------------------------------------------------------------------------- */
+
+export interface SearchResults {
+  tasks?: Task[];
+  projects?: Project[];
+  users?: User[];
 }
 
 /* ------------------------------------------------------------------------- */
@@ -141,6 +150,13 @@ export const api = createApi({
       ],
     }),
 
+    /* --------------------------- Route "Search" -------------------------- */
+
+    // READ - (GET): /search?query=[value]
+    search: build.query<SearchResults, string>({
+      query: (query) => `search?query=${query}`,
+    }),
+
     /* --------------------------------------------------------------------- */
   }),
 });
@@ -158,4 +174,7 @@ export const {
   useGetTasksQuery, //? GET: /tasks?projectId=[id]
   useCreateTaskMutation, //? POST: /tasks + JSON
   useUpdateTaskStatusMutation, //? PATCH: /tasks/[id]/status + JSON
+
+  // API "Search"
+  useSearchQuery, //? GET: /search?query=[value]
 } = api;

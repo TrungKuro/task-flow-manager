@@ -308,3 +308,6 @@
 - ➡️ Để cập nhập giá trị mới cho cột `status` của bảng **Task[id]** (nhập số `id`) trong **DB**.
   - Cần sử dụng `Postman` để thực hiện phương thức **HTTP (PATCH)** với **URL**: `localhost:8000/tasks/[id]/status`
   - Và cung cấp một `body` (chứa `JSON` phần `status` của **Task** đó) đi kèm phương thức `(PATCH)`
+
+- ➡️ Lệnh `curl "localhost:8000/search?query=[value]"`
+  - 📌 Chức năng: trả về `JSON` với mảng danh sách của **Task, Project, User**. Trong đó các phần tử trong mảng (nếu có) cho biết đấy là các **Object** mà **DB** <u>tìm thấy</u> khớp với _"yêu cầu truy vấn tìm kiếm"_ từ **Client**. Giá trị `value` chính là _"nội dung tìm kiếm"_ mà người dùng cung cấp.
