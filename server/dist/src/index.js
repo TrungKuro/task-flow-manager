@@ -21,7 +21,7 @@ const morgan_1 = __importDefault(require("morgan")); // HTTP request logger midd
 const projectRoutes_1 = __importDefault(require("./routes/projectRoutes"));
 const taskRoutes_1 = __importDefault(require("./routes/taskRoutes"));
 const searchRoutes_1 = __importDefault(require("./routes/searchRoutes"));
-// import userRoutes from "./routes/userRoutes";
+const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 // import teamRoutes from "./routes/teamRoutes";
 /* ------------------------------------------------------------------------- */
 /*                               CONFIGURATIONS                              */
@@ -49,7 +49,7 @@ app.get("/", (req, res) => {
 app.use("/projects", projectRoutes_1.default);
 app.use("/tasks", taskRoutes_1.default);
 app.use("/search", searchRoutes_1.default);
-// app.use("/users", userRoutes);
+app.use("/users", userRoutes_1.default);
 // app.use("/teams", teamRoutes);
 /* ------------------------------------------------------------------------- */
 /*                                   SERVER                                  */

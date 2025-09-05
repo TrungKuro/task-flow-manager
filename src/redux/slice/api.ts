@@ -97,7 +97,7 @@ export const api = createApi({
     baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
   }),
   reducerPath: "api", //!
-  tagTypes: ["Projects", "Tasks"],
+  tagTypes: ["Projects", "Tasks", "Users"],
   endpoints: (build) => ({
     /* -------------------------- Route "Project" -------------------------- */
 
@@ -157,6 +157,14 @@ export const api = createApi({
       query: (query) => `search?query=${query}`,
     }),
 
+    /* ---------------------------- Route "User" --------------------------- */
+
+    // READ - (GET): /users
+    getUsers: build.query<User[], void>({
+      query: () => "users",
+      providesTags: ["Users"],
+    }),
+
     /* --------------------------------------------------------------------- */
   }),
 });
@@ -177,4 +185,7 @@ export const {
 
   // API "Search"
   useSearchQuery, //? GET: /search?query=[value]
+
+  // API "User"
+  useGetUsersQuery, //? GET: /users
 } = api;
