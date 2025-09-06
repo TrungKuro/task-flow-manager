@@ -163,6 +163,15 @@ export const api = createApi({
       ],
     }),
 
+    // READ - (GET): /tasks/user/[userId]
+    getTasksByUser: build.query<Task[], number>({
+      query: (userId) => `tasks/user/${userId}`,
+      providesTags: (result, error, userId) =>
+        result
+          ? result.map(({ id }) => ({ type: "Tasks", id }))
+          : [{ type: "Tasks", id: userId }],
+    }),
+
     /* --------------------------- Route "Search" -------------------------- */
 
     // READ - (GET): /search?query=[value]
@@ -203,6 +212,7 @@ export const {
   useGetTasksQuery, //? GET: /tasks?projectId=[id]
   useCreateTaskMutation, //? POST: /tasks + JSON
   useUpdateTaskStatusMutation, //? PATCH: /tasks/[id]/status + JSON
+  useGetTasksByUserQuery, //? GET: /tasks/user/[userId]
 
   // API "Search"
   useSearchQuery, //? GET: /search?query=[value]

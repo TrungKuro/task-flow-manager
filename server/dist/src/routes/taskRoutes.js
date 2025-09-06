@@ -6,4 +6,5 @@ const router = (0, express_1.Router)();
 router.get("/", taskControllers_1.getTasks); // READ
 router.post("/", taskControllers_1.createTask); // CREATE
 router.patch("/:taskId/status", taskControllers_1.updateTaskStatus); // UPDATE "status"
+router.get("/user/:userId", taskControllers_1.getUserTasks); // READ "user"
 exports.default = router;

@@ -1,7 +1,7 @@
 "use strict";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateTaskStatus = exports.createTask = exports.getTasks = void 0;
+exports.getUserTasks = exports.updateTaskStatus = exports.createTask = exports.getTasks = void 0;
 const client_1 = require("@prisma/client");
 /* ------------------------------------------------------------------------- */
 /*                                  Database                                 */
@@ -82,3 +82,28 @@ const updateTaskStatus = async (req, res) => {
     }
 };
 exports.updateTaskStatus = updateTaskStatus;
+// READ (GET) - lấy danh sách tất cả các Task của một User hiện có trong DB
+const getUserTasks = async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const tasks = await prisma.task.findMany({
+            where: {
+                OR: [
+                    { authorUserId: Number(userId) },
+                    { assignedUserId: Number(userId) },
+                ],
+            },
+            include: {
+                author: true,
+                assignee: true,
+            },
+        });
+        res.json(tasks);
+    }
+    catch (error) {
+        res
+            .status(500)
+            .json({ message: `Error retrieving user's tasks: ${error.message}` });
+    }
+};
+exports.getUserTasks = getUserTasks;
