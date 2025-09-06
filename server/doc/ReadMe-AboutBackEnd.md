@@ -291,23 +291,59 @@
 
   - 🎯 Tóm gọn: Lệnh này = _"đồng bộ `sequence`" (auto-increment id)_ với dữ liệu hiện có trong <u>bảng</u> → tránh lỗi khi _"insert"_ tiếp.
 
----
+### Route [projects]
+
+🔗 `GET: /projects`
 
 - ➡️ Lệnh `curl "localhost:8000/projects"`
   - 📌 Chức năng: trả về `JSON` chứa danh sách tất cả **Project** hiện có trong **DB**.
-  - 🧐 Để tạo mới **Project** và lưu vào **DB**.
-    - Cần sử dụng `Postman` để thực hiện phương thức **HTTP (POST)** cũng với **URL**: `localhost:8000/projects`
-    - Và cung cấp một `body` (chứa `JSON` của **Project** mới) đi kèm phương thức `(POST)`
+
+🔗 `POST: /projects + JSON`
+
+- 🧐 Để tạo mới **Project** và lưu vào **DB**.
+  - Cần sử dụng `Postman` để thực hiện phương thức **HTTP (POST)** cũng với **URL**: `localhost:8000/projects`
+  - Và cung cấp một `body` (chứa `JSON` của **Project** mới) đi kèm phương thức `(POST)`
+
+### Route [tasks]
+
+🔗 `GET: /tasks?projectId=[id]`
 
 - ➡️ Lệnh `curl "localhost:8000/tasks?projectId=[id]"`
   - 📌 Chức năng: trả về `JSON` chứa danh sách tất cả **Task** hiện có của **Project[id]** (nhập số `id`) trong **DB**.
-  - 🧐 Để tạo mới **Task** và lưu vào **DB**.
-    - Cần sử dụng `Postman` để thực hiện phương thức **HTTP (POST)** với **URL**: `localhost:8000/tasks`
-    - Và cung cấp một `body` (chứa `JSON` của **Task** mới) đi kèm phương thức `(POST)`
 
-- ➡️ Để cập nhập giá trị mới cho cột `status` của bảng **Task[id]** (nhập số `id`) trong **DB**.
+🔗 `POST: /tasks + JSON`
+
+- 🧐 Để tạo mới **Task** và lưu vào **DB**.
+  - Cần sử dụng `Postman` để thực hiện phương thức **HTTP (POST)** với **URL**: `localhost:8000/tasks`
+  - Và cung cấp một `body` (chứa `JSON` của **Task** mới) đi kèm phương thức `(POST)`
+
+🔗 `PATCH: /tasks/[id]/status + JSON`
+
+- 🧐 Để cập nhập giá trị mới cho cột `status` của bảng **Task[id]** (nhập số `id`) trong **DB**.
   - Cần sử dụng `Postman` để thực hiện phương thức **HTTP (PATCH)** với **URL**: `localhost:8000/tasks/[id]/status`
   - Và cung cấp một `body` (chứa `JSON` phần `status` của **Task** đó) đi kèm phương thức `(PATCH)`
 
+🔗 `GET: /tasks/user/[userId]`
+
+- ?!
+
+### Route [search]
+
+🔗 `GET: /search?query=[value]`
+
 - ➡️ Lệnh `curl "localhost:8000/search?query=[value]"`
   - 📌 Chức năng: trả về `JSON` với mảng danh sách của **Task, Project, User**. Trong đó các phần tử trong mảng (nếu có) cho biết đấy là các **Object** mà **DB** <u>tìm thấy</u> khớp với _"yêu cầu truy vấn tìm kiếm"_ từ **Client**. Giá trị `value` chính là _"nội dung tìm kiếm"_ mà người dùng cung cấp.
+
+### Route [user]
+
+🔗 `GET: /users`
+
+- ➡️ Lệnh `curl "localhost:8000/users"`
+  - 📌 Chức năng: trả về `JSON` chứa danh sách tất cả **User** hiện có trong **DB**.
+
+### Route [team]
+
+🔗 `GET: /teams`
+
+- ➡️ Lệnh `curl "localhost:8000/teams"`
+  - 📌 Chức năng: trả về `JSON` chứa danh sách tất cả **Team** hiện có trong **DB**.
