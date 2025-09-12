@@ -54,7 +54,55 @@
 ## 🏆 CORS
 
 - ⚙️ Kỹ thuật _"cross-origin requests"_ từ **Frontend**:
-  - ?!
+  - 🔹 **CORS** là gì?
+    - `CORS (Cross-Origin Resource Sharing)` = _"Cơ chế bảo mật của trình duyệt"_.
+    - Nó quyết định **có cho phép website A gọi API từ website B hay không**.
+  - 🔹 **Origin** là gì?
+    - `Origin` ~ _"nguồn gốc"_ = 3 thành phần: `protocol + domain + port`.
+    - Ví dụ:
+      ```
+      https://example.com:443
+      http://api.example.com:80
+      ```
+    - 👉 Nếu khác bất kỳ thành phần nào → gọi là <u>khác origin</u> (`cross-origin`).
+
+- ‼️ Vấn đề:
+  - Mặc định, **trình duyệt <u>chặn</u> "request cross-origin"** (chính sách `Same-Origin Policy`).
+  - Nghĩa là: Website _"frontend.com"_ <u>không thể gọi trực tiếp</u> `API` từ _"api.com"_ <u>nếu **server** không cho phép</u>.
+
+- ✅ Giải pháp: **CORS**:
+  - **Server (API)** <u>phải gửi</u> `CORS Headers` để cho phép.
+  - Ví dụ _"header"_ cơ bản:
+    ```
+    Access-Control-Allow-Origin: https://frontend.com 👉 Cho phép frontend.com gọi API
+    Access-Control-Allow-Methods: ...                 👉 GET, POST
+    Access-Control-Allow-Headers: ...                 👉 Content-Type, Authorization
+    ```
+
+- 🔹 `Preflight Request` **(OPTIONS)**:
+  - Với <u>request đặc biệt</u> (POST có JSON, Authorization…).
+    - Browser sẽ gửi `OPTIONS request` trước → hỏi server: _“Có cho phép không?”_
+    - Nếu server trả `header` hợp lệ → mới gửi `request chính`.
+
+- 🔹 Ví dụ thực tế:
+  - Bạn build frontend React chạy ở `http://localhost:3000`.
+  - Backend chạy ở` http://localhost:5000`.
+  - ❌ Nếu backend không bật `CORS` → gọi _"fetch"_ sẽ bị lỗi:
+    ```
+    Access to fetch at 'http://localhost:5000/api'
+    from origin 'http://localhost:3000' has been blocked by CORS policy
+    ```
+  - ✅ Giải quyết: trong backend bật `CORS` _"middleware"_ ➡️ `Express (Node.js)`
+    ```
+    app.use(cors({ origin: "http://localhost:3000" }));
+    ```
+
+- 🔑 Tóm gọn:
+  - `CORS` = `cách để server nói với browser`: `“OK, origin này được phép gọi tôi”`.
+  - ‼️ Nếu không bật → trình duyệt sẽ <u>chặn</u> _"request cross-origin"_ vì lý do bảo mật.
+    ```
+    Database [RDBMS] (SQL) ↔️ Server (Cross-Origin) ↔️ Host (Origin) ↔️ Client (Browser)
+    ```
 
 ## JSON ↔️ Object
 
@@ -226,6 +274,51 @@
     - `npm run build` ➡️ <u>build lại</u> code trước (đã kèm tính năng tự động _"clean"_ thư mục build cũ).
     - `node dist/index.js` ➡️ <u>chạy server</u> bằng **Node.js** từ code đã build.
     - ⚠️ Đây là lệnh dùng trong _"production"_ (không dùng **TypeScript** trực tiếp nữa).
+
+---
+
+- 💎 Gói [`pm2`](https://www.npmjs.com/package/pm2)
+  - `PM2` là một _"production process manager"_ cho các ứng dụng `Node.js/Bun` với bộ _"load balancer"_ được tích hợp sẵn.
+  - Nó cho phép bạn duy trì ứng dụng hoạt động mãi mãi, _"tải lại" (reload)_ mà không bị _"gián đoạn" (downtime)_ và hỗ trợ các _"system admin tasks"_ thông thường.
+
+- ⚖️ Điểm khác nhau giữa `npm run start` và `pm2 start ecosystem.config.js`
+  - 🔹 Khi chạy `npm run start`
+    - Chạy _script "start"_ trong file `package.json`.
+    - Ví dụ `package.json`:
+      ```json
+      "scripts": {
+        "start": "node server.js"
+      }
+      ```
+    - ➡️ Thực chất chỉ là `node server.js`
+    - ❌ Nhược điểm:
+      - App chạy gắn với terminal.
+      - Nếu terminal đóng hoặc server reboot → app dừng.
+      - Không có auto-restart khi crash.
+  - 🔹 Khi chạy `pm2 start ecosystem.config.js`
+    - `ecosystem.config.js` là file cấu hình cho `PM2`, trong đó định nghĩa _"app, script, số instance, env…"_
+    - Ví dụ `ecosystem.config.js`:
+      ```js
+      module.exports = {
+        apps: [
+          {
+            name: "my-app",
+            script: "server.js",
+            instances: "max",
+            exec_mode: "cluster",
+            env: {
+              NODE_ENV: "production",
+            },
+          },
+        ],
+      };
+      ```
+    - ➡️ `PM2` sẽ dựa vào file này để _"start app"_, nhưng khác với `npm run start` ở chỗ:
+      - ✅ App chạy ngầm dưới daemon.
+      - ✅ Tự restart khi crash.
+      - ✅ Có log management (`pm2 logs`).
+      - ✅ Có cluster mode (dùng nhiều CPU core).
+      - ✅ Tự động start khi server reboot (sau `pm2 startup` && `pm2 save`).
 
 ## Một số lệnh NPM test Server:
 

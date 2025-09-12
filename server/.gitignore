@@ -17,3 +17,7 @@ node_modules
 # - Chứa code đã được compile/build từ TypeScript sang JavaScript
 # - Được tạo tự động khi chạy lệnh build → không cần commit lên Git
 dist
+
+# Bỏ qua thư mục key/
+# - Chứa file "key pair"
+key
