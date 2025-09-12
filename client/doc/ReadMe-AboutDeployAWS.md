@@ -646,3 +646,25 @@ Bạn có thể "deploy ứng dụng" từ nhỏ (web cá nhân) đến lớn (h
    - 2️⃣ Lấy **IP** của **Server** bằng cách truy cập `EC2 → Public IPv4 address`
    - 3️⃣ Nhập **(URL)** = `http://[Public IPv4 address]/` ➡️ nếu hiện dòng chữ _"This is Home Route"_ ✅ **Server** OK!
    - 4️⃣ Nhập **(URL)** = `http://[Public IPv4 address]/projects` ➡️ nếu nhận được **JSON** của các _"project"_ hiện có ✅ **Database** OK!
+
+### Cấu hình Amplify
+
+1. Truy cập `AWS Amplify → Deploy an app`
+2. Choose source code provider: `GitHub`
+3. Add repository and branch: ‼️ chọn repo
+   - ✅ My app is a monorepo
+     - Ví dụ, repo có cấu trúc tách riêng phần project **Frontend** và **Backend**
+       ```
+       ├── client
+       ├── server
+       ```
+   - ⚠️ Monorepo root directory
+     - Lúc này cần chỉ đúng đường dẫn thư mục project: _"client"_
+4. App settings → Advanced settings:
+   - Environment variables: thêm cặp `[Key-Value]`
+     - **Key** = `NEXT_PUBLIC_API_BASE_URL` và **Value** = `http://[Public IPv4 address]`
+   - Keep cookies in cache key: ✅ Enable
+5. Kiểm tra các thông số cấu hình OK chưa? ➡️ Nhấn `Save and deploy`
+6. Sau khi deploy thành công 🏆 Nhấn `Visit deployed URL`
+
+
