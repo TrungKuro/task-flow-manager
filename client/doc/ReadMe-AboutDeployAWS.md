@@ -667,4 +667,33 @@ Bạn có thể "deploy ứng dụng" từ nhỏ (web cá nhân) đến lớn (h
 5. Kiểm tra các thông số cấu hình OK chưa? ➡️ Nhấn `Save and deploy`
 6. Sau khi deploy thành công 🏆 Nhấn `Visit deployed URL`
 
+⚠️ Chú ý quá trình **Deploy**:
 
+- Trong giai đoạn phát triển, các package thường được tải về khi cần đến
+  - Hiện project này đang dùng **React** bản `19`. Trong khi có 1 gói tên _"gantt-task-react"_ lại chỉ chấp nhận **React** bản `18`.
+  - Nên gói này được đặt lệnh cài kèm thêm với cờ `--legacy-peer-deps`.
+- Tuy nhiên khi **Deploy**:
+  - Tất cả các gói sẽ được tải về theo lệnh `npm install` thông thường, chính vì vậy quá trình **Deploy** sẽ thất bại ❌
+  - Tạm thời mình dùng _"gantt-task-react"_ không thấy có vấn đề gì với **React** bản `19`.
+  - Cho nên trong `AWS Amplify → ... → task-flow-manager → Hosting: Build settings` chỉnh file (`amplify.yml`) đoạn **[npm install]** thành **[npm install --legacy-peer-deps]** ‼️
+    ```
+    version: 1
+    applications:
+      - frontend:
+          phases:
+            preBuild:
+              commands:
+                - npm install --legacy-peer-deps
+            build:
+              commands:
+                - npm run build
+          artifacts:
+            baseDirectory: .next
+            files:
+              - '**/*'
+          cache:
+            paths:
+              - .next/cache/**/*
+              - node_modules/**/*
+        appRoot: client
+    ```
