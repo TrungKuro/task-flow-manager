@@ -28,6 +28,7 @@
 ---
 
 - 🧐 `Routes - EndPoint` là gì?
+
   - `Endpoint` 👉 là địa chỉ `URL` cụ thể mà **Client** gọi được.
   - `Route` 👉 là định nghĩa trong code **Server** để xử lý _"request"_ đến `EndPoint` đó.
   - 📌 Ví dụ với `Express`:
@@ -42,6 +43,7 @@
     - `EndPoint` = `/users/123` (**URL** thật mà **Client** gọi).
 
   - 👉 Nói ngắn gọn:
+
     - `Route` = code phía **Server**
     - `EndPoint` = **URL** mà **Client** truy cập
 
@@ -54,6 +56,7 @@
 ## 🏆 CORS
 
 - ⚙️ Kỹ thuật _"cross-origin requests"_ từ **Frontend**:
+
   - 🔹 **CORS** là gì?
     - `CORS (Cross-Origin Resource Sharing)` = _"Cơ chế bảo mật của trình duyệt"_.
     - Nó quyết định **có cho phép website A gọi API từ website B hay không**.
@@ -67,10 +70,12 @@
     - 👉 Nếu khác bất kỳ thành phần nào → gọi là <u>khác origin</u> (`cross-origin`).
 
 - ‼️ Vấn đề:
+
   - Mặc định, **trình duyệt <u>chặn</u> "request cross-origin"** (chính sách `Same-Origin Policy`).
   - Nghĩa là: Website _"frontend.com"_ <u>không thể gọi trực tiếp</u> `API` từ _"api.com"_ <u>nếu **server** không cho phép</u>.
 
 - ✅ Giải pháp: **CORS**:
+
   - **Server (API)** <u>phải gửi</u> `CORS Headers` để cho phép.
   - Ví dụ _"header"_ cơ bản:
     ```
@@ -80,11 +85,13 @@
     ```
 
 - 🔹 `Preflight Request` **(OPTIONS)**:
+
   - Với <u>request đặc biệt</u> (POST có JSON, Authorization…).
     - Browser sẽ gửi `OPTIONS request` trước → hỏi server: _“Có cho phép không?”_
     - Nếu server trả `header` hợp lệ → mới gửi `request chính`.
 
 - 🔹 Ví dụ thực tế:
+
   - Bạn build frontend React chạy ở `http://localhost:3000`.
   - Backend chạy ở` http://localhost:5000`.
   - ❌ Nếu backend không bật `CORS` → gọi _"fetch"_ sẽ bị lỗi:
@@ -113,11 +120,13 @@
     - **Update** _"all"_ - `(PUT)`
   - 👉 Nói ngắn gọn: `req.body` = dữ liệu _"payload"_ từ **Client** gửi lên **Server**.
 - ‼️ Bên **Frontend** khi gửi dữ liệu qua `req.body` (thường bằng `fetch` hay `axios`) thì:
+
   - ✅ `Object JS` phải được chuyển thành` JSON string`
   - ⚠️ Phải kèm `header` _"Content-Type": "application/json"_ để **Server** hiểu dữ liệu là `JSON`.
   - 👉 Tóm gọn: **Frontend** phải `stringify` **Object** ➡️ **JSON** + set `Content-Type`, thì **Server** mới _"parse"_ ra `req.body` đúng dạng **Object**.
 
 - ⚙️ Kỹ thuật _"parse request body"_ cho **Form Data**:
+
   - ?!
 
 - 🧐 `JSON` và `URL-Encoded`
@@ -143,15 +152,43 @@
   …
   ```
 
-  - ?!
+- 🧐 `SSL`
+
+  - 🔑 **SSL** là gì?
+    - `SSL (Secure Sockets Layer)` là một <u>giao thức bảo mật</u> giúp <u>mã hóa dữ liệu trao đổi</u> giữa **Client** (trình duyệt, app) và **Server** (website, API, backend).
+    - ‼️ Hiện nay, `TLS (Transport Layer Security)` đã thay thế `SSL`, nhưng mọi người vẫn hay gọi chung là `SSL`.
+  - 🛡️ **SSL** làm gì?
+    - Mã hóa (Encryption): dữ liệu (mật khẩu, số thẻ, token) được biến thành dạng không đọc được nếu bị chặn trên đường truyền.
+    - Xác thực (Authentication): chứng minh website là “chính chủ” (qua chứng chỉ SSL).
+    - Toàn vẹn dữ liệu (Integrity): ngăn chặn việc dữ liệu bị chỉnh sửa khi truyền.
+  - 🌐 Kết quả khi dùng **SSL**:
+    - `URL` dùng `https://` thay vì `http://`.
+    - Trình duyệt hiển thị biểu tượng ổ khóa 🔒.
+    - Ví dụ:
+      ```
+      http://example.com   ❌ không bảo mật
+      https://example.com  ✅ an toàn hơn
+      ```
+  - 👉 Tóm gọn: `SSL/TLS` = <u>lớp áo giáp bảo vệ dữ liệu</u> khi `client ↔ server` giao tiếp qua Internet.
+
+- 🧐 `HTTP` vs `HTTPS`
+  - **HTTP (HyperText Transfer Protocol)** = giao thức truyền dữ liệu thuần túy (plaintext).
+  - **HTTPS (HyperText Transfer Protocol Secure)** = `HTTP + SSL/TLS`, tức là dữ liệu được mã hóa + xác thực + bảo vệ toàn vẹn.
+  - Ví dụ:
+    ```
+    http://example.com → dữ liệu gửi đi có thể bị nghe lén hoặc chỉnh sửa.
+    https://example.com → dữ liệu đi qua đường hầm mã hóa SSL/TLS, hacker chặn được cũng không đọc nổi.
+    ```
+  - 👉 Nói ngắn gọn: `HTTPS` chỉ là phiên bản an toàn của `HTTP` nhờ có `SSL/TLS`.
 
 ## ‼️ File/Folder Recursive
 
-?!
+- ?!
 
 ## 🏆 API
 
 - `Postman` 👉 phần mềm (app) dùng để test và quản lý `API`.
+
   - 📌 Chức năng chính:
     - _Gửi "request"_ (`GET`, `POST`, `PUT`, `DELETE…`) đến **Server**.
     - Thêm `header`, `body`, `token` dễ dàng.
@@ -161,6 +198,7 @@
   - 👉 Nói ngắn gọn: `Postman` = công cụ trực quan để test `API`, thay vì phải gõ `curl` trong **Terminal**.
 
 - `CRUD` 👉 viết tắt của <u>4 thao tác cơ bản</u> khi làm việc với `Database/API`:
+
   - `C` – **Create** → tạo mới dữ liệu `(POST)`.
   - `R` – **Read** → đọc/lấy dữ liệu `(GET)`.
   - `U` – **Update** → cập nhật dữ liệu `(PUT/PATCH)`.
@@ -173,6 +211,7 @@
   - 👉 `CRUD` = <u>4 chức năng cốt lõi</u> trong bất kỳ ứng dụng quản lý dữ liệu nào.
 
 - `HTTP Method` 👉 là cách mà **Client** yêu cầu **Server** xử lý _"request"_.
+
   - 📌 Các _"method"_ chính:
     - `GET` → lấy dữ liệu _(read)_.
     - `POST` → tạo mới dữ liệu _(create)_.
@@ -182,6 +221,7 @@
   - 👉 Nói ngắn gọn: `HTTP Method` = hành động mà **Client** muốn **Server** thực hiện trên _"resource"_.
 
 - `URL (Uniform Resource Locator)` 👉 là địa chỉ duy nhất để truy cập một tài nguyên trên **Internet**.
+
   - 📌 Cấu trúc cơ bản:
 
     ```
@@ -200,6 +240,7 @@
   - 👉 Nói ngắn gọn: `URL` = _“địa chỉ đường đi”_ để **Client** tìm tới đúng tài nguyên trên **Server**.
 
 - `Status Code` 👉 là mã số trong _"HTTP Response"_ để cho biết kết quả xử lý _"request"_ từ **Server**.
+
   - 📌 Các nhóm chính:
     - `1xx` → Thông tin _(info)_.
     - `2xx` → Thành công _(success)_, ví dụ `200 OK`, `201 Created`.
@@ -213,11 +254,13 @@
 ## Các Package hỗ trợ cho Back-End
 
 - 💡 3 gói này giúp giai đoạn _"dev backend"_ nhanh, gọn, không bị lỗi **build** cũ, không phải **restart** thủ công, và dễ chạy nhiều **tool** cùng lúc.
+
   - `rimraf` → dọn build cũ để tránh lỗi.
   - `nodemon` → tự reload server khi code thay đổi.
   - `concurrently` → chạy nhiều tiến trình dev cùng lúc.
 
 - 📌 Gói `rimraf`
+
   - ⚠️ Khi bạn <u>build code</u> **TypeScript** `(.ts)` → **Node.js** `(.tsc)`, <u>output</u> thường nằm trong thư mục `dist/`.
   - ❌ Nếu không xoá trước, các file cũ vẫn nằm lại → dễ gây lỗi.
   - ✅ `rimraf` giúp <u>clean</u> `dist/` trước mỗi lần **Build**, <u>đảm bảo thư mục build luôn sạch</u>.
@@ -239,6 +282,7 @@
   - ⚠️ Phải dừng & chạy lại thủ công → rất mất thời gian.
   - ✅ `nodemon` sẽ _"watch"_ <u>file thay đổi</u> ➡️ <u>tự động restart server</u>.
 - 📌 Gói `concurrently`
+
   - ⚠️ Khi _"dev"_ thường phải <u>chạy nhiều process cùng lúc</u>:
     - `Server Backend` (Node/Express/Nest).
     - `Database` (Docker, hoặc local Postgres).
@@ -278,6 +322,7 @@
 ---
 
 - 💎 Gói [`pm2`](https://www.npmjs.com/package/pm2)
+
   - `PM2` là một _"production process manager"_ cho các ứng dụng `Node.js/Bun` với bộ _"load balancer"_ được tích hợp sẵn.
   - Nó cho phép bạn duy trì ứng dụng hoạt động mãi mãi, _"tải lại" (reload)_ mà không bị _"gián đoạn" (downtime)_ và hỗ trợ các _"system admin tasks"_ thông thường.
 
@@ -323,7 +368,9 @@
 ## Một số lệnh NPM test Server:
 
 - Trong giai đoạn _"dev"_:
+
   - ➡️ Lệnh `npm run dev`
+
     - 📌 Kết quả (mẫu):
       ```
       Starting incremental compilation...
@@ -351,7 +398,9 @@
 ---
 
 - ‼️ **Command for resetting ID in Database**:
+
   - 💎 Câu lệnh này dùng để _"reset sequence"_ của <u>cột</u> `id` cho đồng bộ với dữ liệu thực tế trong <u>bảng</u>.
+
     - Nếu bạn đã <u>chèn thủ công dữ liệu</u> (vd: qua `Postman`) có `id` lớn hơn mà quên cập nhật **Sequence → Insert** tiếp sẽ bị lỗi _"duplicate key"_.
     - Lệnh này sẽ đảm bảo _"sequence"_ tiếp tục đếm từ `[max(id)+1]`.
 
@@ -367,6 +416,7 @@
   ```
 
   - 📌 Ý nghĩa từng phần:
+
     - `pg_get_serial_sequence('"[DATA_MODEL_NAME_HERE]"', 'id')`
       - Lấy tên _"sequence"_ mà **PostgreSQL** đang dùng cho <u>cột</u> `id` của <u>bảng</u> `[DATA_MODEL_NAME_HERE]`.
       - _"sequence"_ = <u>bộ đếm auto-increment</u> trong **PostgreSQL** (tạo giá trị cho `SERIAL` hoặc `BIGSERIAL`).

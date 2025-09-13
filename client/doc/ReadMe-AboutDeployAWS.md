@@ -200,6 +200,79 @@ Bạn có thể "deploy ứng dụng" từ nhỏ (web cá nhân) đến lớn (h
 - 🧐 `Amazon Machine Image (AMI)`
   - ?!
 
+- 🧐 `Proxy` vs `VPN`
+  - 🔹 **Proxy** là gì?
+    - `Proxy Server` = máy chủ trung gian giữa bạn và Internet.
+    - Khi bạn truy cập web qua proxy:
+      - Request của bạn đi đến proxy trước.
+      - Proxy thay mặt bạn gửi request đến website.
+      - Website trả dữ liệu về cho proxy.
+      - Proxy chuyển lại dữ liệu cho bạn.
+    - 👉 Proxy thường được dùng để:
+      - Ẩn IP thật (website chỉ thấy IP proxy).
+      - Bypass chặn nội dung (VD: chặn Facebook, proxy vẫn vào được).
+      - Cache để tăng tốc (nhất là trong công ty).
+  - 🔹 **VPN** là gì?
+    - `VPN (Virtual Private Network)` = tạo đường hầm mã hóa (encrypted tunnel) giữa bạn và server VPN.
+    - Toàn bộ traffic (không chỉ web mà cả app, email, game, API…) đi qua VPN → được mã hóa và gửi đến server VPN trước khi ra Internet.
+    - 👉 VPN thường dùng để:
+      - Ẩn danh + thay đổi vị trí địa lý (fake IP sang Mỹ, Nhật…).
+      - Bảo mật khi dùng WiFi công cộng (dữ liệu bị mã hóa, hacker khó sniff).
+      - Truy cập tài nguyên nội bộ (VD: nhân viên làm việc remote truy cập server công ty qua VPN).
+  - 💎 Nói đơn giản:
+    - `Proxy` = người trung gian chuyển lời nói giúp bạn (ẩn danh nhưng không che giấu nội dung).
+    - `VPN` = vừa có người trung gian, vừa có “hộp đen” mã hóa thông điệp (người khác không hiểu bạn nói gì).
+
+- 🧐 `Invoke URL`
+  - Thực ra `Invoke URL` cũng chỉ là một loại `URL`, nhưng có sự khác biệt về ngữ cảnh sử dụng:
+    - **URL (Uniform Resource Locator)**
+      - → Khái niệm chung: đường dẫn để <u>truy cập tài nguyên</u> trên web (website, file, ảnh, API...).
+      - Ví dụ:
+        ```
+        https://google.com (website)
+        https://myapp.com/assets/logo.png (ảnh)
+        ```
+    - **Invoke URL**
+      - → Là `URL` được sinh ra để `gọi (invoke)` một <u>dịch vụ hay API</u> sau khi bạn deploy.
+      - → Thường thấy trong <u>môi trường cloud</u> (AWS API Gateway, Amplify, Lambda function URL...).
+      - Ví dụ AWS API Gateway cấp cho bạn:
+        ```
+        https://abcd1234.execute-api.us-east-1.amazonaws.com/prod/
+        ```
+      - ✅ Đây không phải _URL “tĩnh”_ như website, mà là _URL chuyên dụng_ để gửi request tới `API Backend`.
+  - 📌 Nói ngắn gọn:
+    - `URL` = khái niệm chung.
+    - `Invoke URL` = URL cụ thể, sinh ra bởi hệ thống cloud/service, để bạn gọi thực thi (invoke) API/service.
+
+- 🧐 `Internet Gateway (IGW)` vs `API Gateway (APIGW)`
+  - 🔹 **IGW**
+    - Là cổng mạng giúp các tài nguyên trong `VPC` (ví dụ `EC2`) ra/vào Internet.
+    - Khi bạn truy cập `http://[Public IPv4 address]`, request đi qua `Internet Gateway` để tới `EC2 Public IP`.
+    - Nó không can thiệp vào request của bạn, chỉ giống như "cầu nối mạng", tức <u>xử lý request</u> HTTP/WS.
+    - 👉 Tóm lại: `IGW` chỉ để connect mạng, không có tính năng nâng cao.
+  - 🔹 **APIGW**
+    - Là một dịch vụ _"application layer"_ của `AWS` để <u>quản lý request</u> HTTP/WS.
+    - Nó không chỉ là cầu nối mà còn có nhiều chức năng quan trọng:
+    - 💎 Các tính năng chính của `API Gateway`:
+      - ✅ Routing: Điều hướng request đến Lambda, EC2, ECS, hay nhiều service backend khác nhau.
+      - ✅ Authentication & Authorization: Tích hợp AWS Cognito, IAM, OAuth2 để kiểm soát ai được gọi API.
+      - ✅ Rate limiting & Throttling: Giới hạn số request/giây để chống DDoS hoặc abuse.
+      - ✅ Monitoring & Logging: Tích hợp CloudWatch để xem log, metrics, request count, error count.
+      - ✅ Caching: Giảm tải backend bằng cách cache response.
+      - ✅ Custom Domain + SSL: Bạn có thể expose API với tên miền riêng (api.myapp.com) thay vì IP.
+      - ✅ Versioning: Quản lý nhiều version của API (v1, v2).
+  - 🏆 Tóm lại:
+    - `Internet Gateway` = cầu nối mạng `(network-level)`.
+      - Khi không có `API Gateway`
+      ```
+      User (Browser) ➡️ Internet Gateway ➡️ EC2 (‼️ Public IP) ➡️ Database (RDS Private Subnet)
+      ```
+    - `API Gateway` = cửa chính có bảo vệ, kiểm soát, và quản lý traffic API `(application-level)`.
+      - Khi có `API Gateway`
+      ```
+      User (Browser) ➡️ API Gateway (Public URL, HTTPS) ➡️ EC2 (‼️ Private Subnet, không cần Public IP) ➡️ Database (RDS Private Subnet)
+      ```
+
 ## Các dịch vụ sử dụng cho `Web App`:
 
 - 🔗 [What is the AWS `Command Line Interface`?](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html)
@@ -697,3 +770,69 @@ Bạn có thể "deploy ứng dụng" từ nhỏ (web cá nhân) đến lớn (h
               - node_modules/**/*
         appRoot: client
     ```
+
+### Cấu hình API Gateway
+
+1. Vào `API Gateway → REST APIs`
+   - Create REST API Info
+     - API details: `New API`
+     - API name: _"tfm-api-gateway"_
+     - 👉🏻 Bấm nút `Create API`
+2. Vào `Resources → Create resource`
+   - Resource details: ✅ `Proxy resource`
+   - Resource name: _"{proxy+}"_
+   - Resource path: _"/"_
+   - ✅ `CORS` (Cross Origin Resource Sharing)
+   - 👉🏻 Bấm nút `Create resource`
+3. Sau khi có **Proxy Route**, ta cần `Edit integration` cho `Method ANY`
+   - Edit integration request
+     - Method details
+       - Integration type: `HTTP`
+       - ✅ `HTTP proxy integration`
+       - HTTP method: `ANY`
+       - Endpoint URL: `http://[Public IPv4 address]/{proxy}`
+   - 👉🏻 Bấm nút `Save`
+4. Cho `Deploy API`
+   - Stage: _"\*New stage\*"_
+   - Stage name: _"prod"_
+   - 👉🏻 Bấm nút `Deploy`
+5. Vào `AWS Amplify` → _"task-flow-manager"_ → `Hosting: Environment variables`
+   - Đổi biến môi trường có **Key** = `NEXT_PUBLIC_API_BASE_URL` từ **Value** = `http://[Public IPv4 address]` sang **Value** = `https://{api-id}.execute-api.{region}.amazonaws.com/{stage}/{resource-path}`
+   - Trong đó:
+     - `{api-id}` → ID duy nhất của API Gateway (AWS tự cấp, dạng chuỗi ngẫu nhiên, ví dụ: abc123xyz9).
+     - `execute-api` → domain mặc định mà AWS dùng cho API Gateway.
+     - `{region}` → Region bạn deploy (ví dụ: us-east-1, ap-southeast-1).
+     - `{stage}` → Môi trường bạn publish (ví dụ: dev, staging, prod).
+     - `{resource-path}` → Đường dẫn API bạn định nghĩa (ví dụ: /users, /orders/123).
+
+- 💎 Sau khi `Deploy` ta sẽ có `Invoke URL` để dùng <u>thay thế</u> cho `Public IP` của `EC2` là `[Public IPv4 address]` hiện đang dùng tạm cho **Frontend** đã _"deploy"_ trên `AWS Amplify`
+  - ❌ Nhược điểm khi dùng **Public IP** trực tiếp:
+    - IP thay đổi: Nếu bạn stop/start lại `EC2`, **Public IP** có thể thay đổi (trừ khi bạn mua `Elastic IP`).
+    - Không bảo mật: Ai biết IP cũng có thể tấn công port 80/443/22.
+    - Không có domain: User sẽ thấy http://[Public IPv4 address] rất xấu, không chuyên nghiệp.
+    - Khó quản lý: Không có auth, rate limit, logs → không biết user nào gọi API.
+    - Single point of failure: Một EC2 chết = cả hệ thống chết.
+  - ✅ Giải pháp chuẩn:
+    - 1️⃣ Dùng `Domain` + `Load Balancer` ➡️ `(ALB/NLB)`
+      - Luồng: User → Domain (Route53) → Load Balancer (ALB) → EC2 instances.
+        - Trỏ _"domain" (api.myapp.com)_ về `Application Load Balancer (ALB)`.
+        - `ALB` phân phối request đến 1 hoặc nhiều `EC2` backend.
+        - Có `SSL (HTTPS)` + scale dễ dàng.
+    - 2️⃣ Hoặc dùng `Domain` + `API Gateway`
+      - Luồng: User → Domain (Route53) → API Gateway → (Lambda / ECS / EC2).
+        - **Domain** đẹp _(https://api.myapp.com)_.
+        - Có Auth, rate limit, caching.
+        - Backend có thể là `EC2`, `ECS`, hoặc `Lambda`.
+        - Luôn chạy qua 👍 `HTTPS (port 443)` thay vì 👎🏻 `HTTP (port 80)`.
+  - 📌 So sánh nhanh:
+    | Tiêu chí | Domain + Load Balancer | Domain + API Gateway |
+    | ------------------ | ----------------------------- | ------------------------------------------------- |
+    | Quản lý traffic | Phân phối đến nhiều EC2 | Có thể route đến nhiều service (Lambda, EC2, ECS) |
+    | Bảo mật/Auth | Tự cài (JWT middleware, etc.) | Built-in (IAM, Cognito, OAuth2) |
+    | Logging/Monitoring | CloudWatch (phải config thêm) | CloudWatch tích hợp sẵn |
+    | Caching | Không có sẵn | Có built-in caching |
+    | Chi phí | Rẻ hơn nếu nhiều request | Tốn hơn nếu request nhiều |
+    | Dễ dùng với API | Bình thường (backend lo hết) | Tối ưu cho API management |
+  - 👉 Tóm gọn:
+    - Nếu backend bạn **chỉ là EC2 app backend** → nên đi `Domain + Load Balancer`.
+    - Nếu backend bạn là **API cho client/mobile, cần auth/rate limit/caching** → đi `Domain + API Gateway`.
