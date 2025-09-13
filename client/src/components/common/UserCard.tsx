@@ -20,7 +20,7 @@ const UserCard = ({ user }: UserCardProps) => {
       {user.profilePictureUrl && (
         <div className="relative h-10 w-10">
           <Image
-            src={`/${user.profilePictureUrl}`}
+            src={`${process.env.NEXT_PUBLIC_TFM_S3_IMAGES_URL}/${user.profilePictureUrl}`}
             alt="profile picture"
             fill
             className="rounded-full object-cover"

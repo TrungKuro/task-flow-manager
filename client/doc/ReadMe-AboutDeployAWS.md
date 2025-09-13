@@ -836,3 +836,86 @@ Bạn có thể "deploy ứng dụng" từ nhỏ (web cá nhân) đến lớn (h
   - 👉 Tóm gọn:
     - Nếu backend bạn **chỉ là EC2 app backend** → nên đi `Domain + Load Balancer`.
     - Nếu backend bạn là **API cho client/mobile, cần auth/rate limit/caching** → đi `Domain + API Gateway`.
+
+### Cấu hình S3
+
+1. Vào `Amazon S3 → Create bucket`
+   - General configuration:
+     - Bucket type: `General purpose`
+     - Bucket name: _"tfm-s3-images"_
+   - Object Ownership: `ACLs disabled`
+   - Block Public Access settings for this bucket:
+     - ❌ `Block all public access`
+     - ✅ **I acknowledge that the current settings might result in this bucket and the objects within becoming public.**
+   - Bucket Versioning: `Disable`
+   - Default encryption:
+     - Encryption type: `Server-side encryption with Amazon S3 managed keys (SSE-S3)`
+     - Bucket Key: `Enable`
+   - 👉🏻 Bấm nút `Create bucket`
+2. Upload tất cả _"image"_ có trong thư mục `public` của project **Frontend** thư mục `client` vào **Bucket** _"tfm-s3-images"_
+3. Sau khi upload xong, bạn cần phân quyền truy cập **Bucket** này, vào `Permissions → Bucket policy`
+
+   ```json
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "PublicReadGetObject",
+         "Effect": "Allow",
+         "Principal": "*",
+         "Action": "s3:GetObject",
+         "Resource": "arn:aws:s3:::YOUR_BUCKET_NAME/*"
+       }
+     ]
+   }
+   ```
+
+   - ⚠️ Lưu ý: cấu hình này sẽ khiến bucket hoàn toàn công khai, bất kỳ ai trên Internet đều có thể truy cập file → chỉ nên dùng cho static assets (ảnh, file public…) hoặc môi trường test/demo.
+   - 🔎 Giải thích nhanh:
+     - `"Principal"`: `"*"` → cho phép tất cả mọi user.
+     - `"Action"`: `"s3:GetObject"` → chỉ cho phép tải object (GET).
+     - `"Resource"`: `"arn:aws:s3:::tfm-s3-images/*"` → áp dụng cho toàn bộ object trong bucket.
+
+4. Để **Frontend (Next.js)** load ảnh từ **Amazon S3**, bạn cần cấu hình trong `next.config.ts` trong thư mục `client`
+
+   ```ts
+   import type { NextConfig } from "next";
+
+   const nextConfig: NextConfig = {
+     images: {
+       remotePatterns: [
+         {
+           protocol: "https",
+           hostname: "YOUR_BUCKET_NAME.s3.{region}.amazonaws.com",
+           pathname: "/**",
+         },
+       ],
+     },
+   };
+
+   export default nextConfig;
+   ```
+
+   - 🔎 Giải thích:
+     - `protocol`: `'https'` → S3 public URL luôn dùng HTTPS.
+     - `hostname`: `'tfm-s3-images.s3.{region}.amazonaws.com'` → thay bằng **hostname** trong `Object URL` của ảnh đã upload
+     - `pathname`: `'/**'` → cho phép tất cả ảnh trong bucket.
+
+5. Cuối cùng cập nhập lại nguồn lấy ảnh cho thuộc tính `src` của tất cả thẻ `<Image>` trong project **Frontend**
+
+   ```
+   <Image
+     src={`/${...}`} ➡️ src={`https://[hostname]/${...}`}
+     ...
+   />
+   ```
+
+   - ✅ Có thể dùng _"biến môi trường"_ thay thế cho phần giá trị `https://[hostname]`
+   - Ví dụ: dùng **Key** = `NEXT_PUBLIC_TFM_S3_IMAGES_URL` và **Value** = `https://[hostname]` rồi cập nhập thêm _"biến môi trường"_ vào cho `AWS Amplify`
+
+   ```
+   <Image
+    src={`${process.env.NEXT_PUBLIC_TFM_S3_IMAGES_URL}/${...}`}
+    ...
+   />
+   ```

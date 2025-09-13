@@ -76,7 +76,7 @@ const SideBar = () => {
         {/* Team */}
         <div className="flex items-center gap-5 border-y-[1.5px] border-gray-200 px-8 py-4 dark:border-gray-700">
           {/* Logo Image */}
-          <Image src="/logo.png" alt="Logo" width={40} height={40} />
+          <Image src={`${process.env.NEXT_PUBLIC_TFM_S3_IMAGES_URL}/logo.png`} alt="Logo" width={40} height={40} />
 
           {/* Information */}
           <div>
